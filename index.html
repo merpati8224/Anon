@@ -1,274 +1,245 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Star ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FunTools - Merpati Edition ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* TEMA PREMIUM PINK & CREAM */
-        body { background-color: #fff5f7; font-family: 'Poppins', sans-serif; margin: 0; color: #444; display: flex; justify-content: center; }
-        .app-container { background: white; width: 100%; max-width: 400px; min-height: 100vh; position: relative; padding-bottom: 80px; box-sizing: border-box; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
-
-        /* HEADER */
-        .header { background: #ff9fb2; padding: 25px 20px; color: white; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; display: flex; justify-content: space-between; align-items: center; }
-        .stats { display: flex; gap: 10px; font-weight: bold; }
-        .stat-item { background: rgba(255,255,255,0.25); padding: 6px 12px; border-radius: 15px; font-size: 13px; display: flex; align-items: center; gap: 5px; }
-
-        /* NAVIGATION & MENU */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; padding: 0 20px; }
-        .menu-box { background: #fffcfd; border: 2px solid #ffccd5; padding: 20px; border-radius: 25px; text-align: center; font-weight: bold; cursor: pointer; color: #ff859d; transition: 0.3s; }
-        .menu-box:active { transform: scale(0.95); background: #fff0f3; }
-
-        /* SCREENS */
-        .screen { padding: 25px 20px; display: none; }
-        .active-screen { display: block; }
-
-        /* QUIZ MODAL */
-        .modal-quiz { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: none; flex-direction: column; padding: 20px; box-sizing: border-box; }
-        .btn-opsi { background: #fff; border: 2px solid #ffccd5; padding: 15px; width: 100%; border-radius: 15px; margin-bottom: 10px; cursor: pointer; font-size: 16px; color: #555; font-family: 'Poppins'; }
-        
-        input { padding: 15px; width: 80%; border-radius: 15px; border: 2px solid #ffccd5; outline: none; margin-bottom: 20px; text-align: center; }
-        .btn-pink { background: #ff9fb2; color: white; border: none; padding: 15px 50px; border-radius: 30px; font-weight: bold; cursor: pointer; }
-        
-        .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 400px; background: white; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; }
-        .nav-item { color: #ccc; font-size: 12px; cursor: pointer; text-align: center; }
-        .nav-active { color: #ff9fb2; }
+        :root { --pink-soft: #ffcce0; --pink-bold: #ff85a2; --cream: #fdf0f0; --text: #7d5a5a; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--cream); margin: 0; color: #555; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        nav { background-color: var(--pink-soft); width: 100%; display: none; justify-content: space-around; padding: 12px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav button { background: none; border: none; color: var(--text); font-weight: 600; cursor: pointer; font-size: 12px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: white; width: 90%; max-width: 400px; margin: 20px auto; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2); text-align: center; }
+        h2 { color: var(--pink-bold); font-size: 20px; margin-bottom: 15px; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ffdde1; border-radius: 15px; box-sizing: border-box; outline: none; font-family: 'Poppins'; font-size: 14px; }
+        .main-btn { background-color: #ffb6c1; color: white; border: none; padding: 14px; border-radius: 20px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; margin-top: 10px; box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4); }
+        .main-btn:active { transform: scale(0.98); }
+        .ad-space { background: #fff5f7; border: 1px dashed var(--pink-bold); border-radius: 15px; padding: 10px; margin: 20px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--pink-bold); overflow: hidden; }
+        .msg-card { background: #fffafb; padding: 15px; margin: 10px 0; border-radius: 15px; border-left: 5px solid #ffb6c1; text-align: left; font-size: 13px; word-wrap: break-word; animation: fadeIn 0.5s ease; }
+        #my-link-box { background: var(--cream); padding: 15px; border-radius: 15px; border: 2px dashed var(--pink-bold); margin: 15px 0; }
+        #link-display { font-size: 10px; word-break: break-all; color: var(--text); font-weight: bold; }
+        .visual-img { width: 130px; height: auto; margin: 15px auto; display: block; }
+        #bmi-chart-container { width: 100%; height: 80px; margin-top: 10px; display: flex; justify-content: center; }
+        .footer-name { font-size: 9px; margin: 30px 0; color: #ccc; letter-spacing: 2px; text-transform: uppercase; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div id="scr-login" class="screen active-screen" style="text-align: center;">
-        <h1 style="color:#ff9fb2; margin-top:80px;">English Star ✨</h1>
-        <p style="font-size: 14px; color: #888;">Belajar bahasa Inggris dengan asyik!</p>
-        <input type="text" id="inputNama" placeholder="Ketik namamu...">
-        <br>
-        <button class="btn-pink" onclick="showLevel()">Mulai Belajar</button>
+<nav id="main-nav">
+    <button onclick="showPage('ideal')">📏<span>Ideal</span></button>
+    <button onclick="showPage('pesan')">📩<span>Pesan</span></button>
+    <button onclick="showPage('jodoh')">❤️<span>Jodoh</span></button>
+    <button onclick="window.logout()" style="color: var(--pink-bold);">🚪<span>Exit</span></button>
+</nav>
+
+<div class="container">
+    <section id="page-login" class="content-page">
+        <h2>Halo, Merpati! ✨</h2>
+        <p style="font-size: 12px; color: #999; margin-bottom: 20px;">Masuk untuk mengelola tools kamu</p>
+        <button class="main-btn" onclick="window.handleLogin()">Login via Google</button>
+    </section>
+
+    <div id="main-content" style="display: none;">
+        <section id="ideal" class="sub-page">
+            <h2>Visualisasi Tubuh</h2>
+            <select id="gender"><option value="pria">👨 Pria</option><option value="wanita">👩 Wanita</option></select>
+            <input type="number" id="tinggi" placeholder="Tinggi (cm)">
+            <input type="number" id="berat" placeholder="Berat (kg)">
+            <button class="main-btn" onclick="window.hitungVisual()">Lihat Visual Saya</button>
+            <div id="hasilBMI" style="display:none; margin-top:20px; background: #fffafb; padding: 15px; border-radius: 20px;">
+                <p id="status-teks" style="font-weight:bold; font-size: 18px;"></p>
+                <div id="bmi-chart-container"></div>
+                <img id="img-visual" class="visual-img" src="">
+                <p id="saran-teks" style="font-size:12px; font-style:italic; color: #7d5a5a;"></p>
+            </div>
+        </section>
+
+        <section id="pesan" class="sub-page" style="display:none;">
+            <h2>Pesan Rahasia</h2>
+            <div id="my-link-box">
+                <p style="font-size: 11px; margin-bottom: 5px;">Link Story IG Kamu:</p>
+                <div id="link-display">Memuat link...</div>
+            </div>
+            <button class="main-btn" onclick="window.copyAndShare()">Salin Link & Buka IG ✨</button>
+            <div class="ad-space">IKLAN BANNER DISINI</div>
+            <h3 style="font-size:14px; text-align:left; margin-top:20px; color: var(--pink-bold);">Pesan Masuk:</h3>
+            <div id="list-pesan">Memuat pesan...</div>
+        </section>
+
+        <section id="jodoh" class="sub-page" style="display:none;">
+            <h2>Kecocokan ❤️</h2>
+            <input type="text" id="nama1" placeholder="Nama Kamu">
+            <input type="text" id="nama2" placeholder="Nama Pasangan">
+            <button class="main-btn" onclick="window.cekJodoh()">Cek Persentase</button>
+            <div id="hasilJodoh" style="margin-top:20px; font-size: 32px; font-weight: bold; color: var(--pink-bold);"></div>
+        </section>
     </div>
 
-    <div id="scr-level" class="screen">
-        <h3 style="color:#ff9fb2; text-align:center">Pilih Level Kamu 🌸</h3>
-        <div id="level-list">
-            <button onclick="finishLogin('A1')" class="btn-opsi" style="text-align:left;">
-                <b style="color:#ff859d">A1 - Beginner</b><br><small>Dasar & Kosakata Harian</small>
-            </button>
-            <button onclick="finishLogin('A2')" class="btn-opsi" style="text-align:left;">
-                <b style="color:#ff859d">A2 - Elementary</b><br><small>Percakapan Sederhana</small>
-            </button>
-        </div>
-    </div>
+    <section id="page-send-msg" class="content-page" style="display:none;">
+        <h2>Kirim Pesan Anonim</h2>
+        <p style="font-size: 12px; margin-bottom: 10px;">Pesanmu akan terkirim secara rahasia.</p>
+        <textarea id="anon-text" rows="4" placeholder="Tulis rahasiamu..."></textarea>
+        <button class="main-btn" onclick="window.sendToFirebase()">Kirim Rahasia 🤫</button>
+    </section>
 
-    <div id="main-app" style="display:none">
-        <div class="header">
-            <div>
-                <div id="displayNama" style="font-weight:bold; font-size:18px">Halo!</div>
-                <div id="displayLevel" style="font-size:11px; background:rgba(255,255,255,0.3); padding:3px 8px; border-radius:8px;">A1 Member</div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">❤️ <span id="valHati">5</span></div>
-                <div class="stat-item">⭐ <span id="valBintang">0</span></div>
-            </div>
-        </div>
-
-        <div id="tab-home" class="screen active-screen">
-            <div style="display:flex; justify-content: space-between; align-items: center;">
-                <h4>Latihan Hari Ini</h4>
-                <select id="selectDay" onchange="changeDay()" style="border: 1px solid #ffccd5; border-radius: 10px; color: #ff859d;">
-                    <option value="1">Day 1</option>
-                    <option value="2">Day 2</option>
-                    </select>
-            </div>
-            <div class="menu-grid">
-                <div class="menu-box" onclick="mulaiKuis('Writing')">📝<br><small>Writing</small></div>
-                <div class="menu-box" onclick="mulaiKuis('Listening')">🎧<br><small>Listening</small></div>
-                <div class="menu-box" onclick="mulaiKuis('Grammar')">📖<br><small>Grammar</small></div>
-                <div class="menu-box" onclick="mulaiKuis('Reading')">🔤<br><small>Reading</small></div>
-            </div>
-        </div>
-
-        <div id="tab-materi" class="screen">
-            <h4 style="text-align:left;">Materi Belajar</h4>
-            <div id="list-materi">
-                </div>
-        </div>
-
-        <div id="tab-vocab" class="screen">
-            <h4 style="text-align:left;">Kamus Kecil</h4>
-            <div id="list-vocab">
-                </div>
-        </div>
-
-        <div class="nav-bar">
-            <div class="nav-item nav-active" onclick="switchTab('home', this)">🏠<br>Home</div>
-            <div class="nav-item" onclick="switchTab('materi', this)">📚<br>Materi</div>
-            <div class="nav-item" onclick="switchTab('vocab', this)">🔤<br>Vocab</div>
-        </div>
-    </div>
+    <div class="footer-name">by: merpati</div>
 </div>
 
-<div id="quiz-screen" class="modal-quiz">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <button onclick="tutupKuis()" style="border:none; background:none; font-size:24px; color:#ff9fb2">✕</button>
-        <b id="judulKuis">Latihan</b>
-        <div style="color:#ff9fb2; font-weight:bold">❤️ <span id="valHatiKuis">5</span></div>
-    </div>
-    <div id="areaSoal" style="margin-top:40px; text-align: center;">
-        <div id="progress-bar" style="height:5px; background:#eee; width:100%; border-radius:10px; margin-bottom:20px;">
-            <div id="progress-fill" style="height:100%; background:#ff9fb2; width:0%; transition:0.3s;"></div>
-        </div>
-        <h2 id="teksTanya" style="font-size: 20px; min-height: 60px;">Pertanyaan...</h2>
-        <div id="areaOpsi" style="margin-top: 30px; display: flex; flex-direction: column;"></div>
-    </div>
-</div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
 
-<script src="soal_a1_b2.js"></script>
-<script src="materi_a1_b2.js"></script>
-<script src="vocab_a1_b2.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<script>
-    let bintang = 0;
-    let hati = 5;
-    let currentDay = "Day1";
-    let myName = "";
-    let myLevel = "A1";
-    let indexSoal = 0;
-    let soalAktif = [];
+    const firebaseConfig = {
+        apiKey: "AIzaSyBRUMOALHTCiJ83lBc1KaYc0QcsSIfw5ek",
+        authDomain: "webanonymous-128cd.firebaseapp.com",
+        projectId: "webanonymous-128cd",
+        storageBucket: "webanonymous-128cd.firebasestorage.app",
+        messagingSenderId: "789801328425",
+        appId: "1:789801328425:web:67467f05e1e2fa2ecba138"
+    };
 
-    // Fungsi Navigasi Tab
-    function switchTab(tabName, el) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('nav-active'));
-        
-        document.getElementById('tab-' + tabName).classList.add('active-screen');
-        el.classList.add('nav-active');
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const receiverID = urlParams.get('to');
 
-        if(tabName === 'materi') loadMateri();
-        if(tabName === 'vocab') loadVocab();
-    }
+    // Global Functions
+    window.handleLogin = () => signInWithPopup(auth, provider).catch(err => alert("Gagal Login: " + err.message));
+    window.logout = () => signOut(auth).then(() => location.href = window.location.origin + window.location.pathname);
 
-    function showLevel() {
-        myName = document.getElementById('inputNama').value;
-        if(myName) {
-            document.getElementById('scr-login').style.display = 'none';
-            document.getElementById('scr-level').style.display = 'block';
-        } else {
-            alert("Masukkan namamu dulu ya ✨");
+    // Auth State
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            if (receiverID && receiverID !== user.uid) { 
+                switchSection('page-send-msg'); 
+            } else { 
+                switchSection('main-content'); 
+                document.getElementById('main-nav').style.display = 'flex'; 
+                setupDashboard(user); 
+            }
+        } else { 
+            switchSection(receiverID ? 'page-send-msg' : 'page-login'); 
         }
+    });
+
+    function switchSection(id) {
+        document.querySelectorAll('.content-page').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
     }
 
-    function finishLogin(lvl) {
-        myLevel = lvl;
-        document.getElementById('scr-level').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        document.getElementById('displayNama').innerText = "Halo, " + myName + "!";
-        document.getElementById('displayLevel').innerText = lvl + " Member";
+    window.showPage = (id) => {
+        document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+    };
+
+    // Dashboard & Messages
+    function setupDashboard(user) {
+        const link = window.location.origin + window.location.pathname + "?to=" + user.uid;
+        document.getElementById('link-display').innerText = link;
+        
+        const q = query(collection(db, "messages"), where("receiverID", "==", user.uid), orderBy("timestamp", "desc"));
+        onSnapshot(q, (snap) => {
+            let html = "";
+            snap.forEach(doc => { 
+                const data = doc.data();
+                html += `<div class="msg-card">${data.text}</div>`; 
+            });
+            document.getElementById('list-pesan').innerHTML = html || "Belum ada pesan...";
+        });
     }
 
-    function changeDay() {
-        currentDay = "Day" + document.getElementById('selectDay').value;
+    // BMI Visualizer
+    let bmiRoot = null;
+    window.hitungVisual = () => {
+        const gen = document.getElementById('gender').value;
+        const bb = parseFloat(document.getElementById('berat').value);
+        const tb_cm = parseFloat(document.getElementById('tinggi').value);
+        
+        if(!bb || !tb_cm) return alert("Isi data tinggi dan berat dulu ya!");
+        
+        const tb_m = tb_cm / 100;
+        const bmi = bb / (tb_m * tb_m);
+        document.getElementById('hasilBMI').style.display = "block";
+        
+        let status = "", url = "", color = "", saran = "";
+        if(bmi < 18.5) { 
+            status = "Kurus 🥬"; color = "#8ad4ff"; saran = "Yuk, makan lebih banyak protein!";
+            url = gen === 'pria' ? "https://cdn-icons-png.flaticon.com/512/11626/11626078.png" : "https://cdn-icons-png.flaticon.com/512/11626/11626079.png"; 
+        } else if(bmi < 25) { 
+            status = "Ideal ✨"; color = "#aed581"; saran = "Keren! Pertahankan pola hidupmu.";
+            url = gen === 'pria' ? "https://cdn-icons-png.flaticon.com/512/11626/11626073.png" : "https://cdn-icons-png.flaticon.com/512/11626/11626074.png"; 
+        } else { 
+            status = "Overweight 🍔"; color = "#ffb74d"; saran = "Kurangi gorengan & rutin olahraga yuk!";
+            url = gen === 'pria' ? "https://cdn-icons-png.flaticon.com/512/11626/11626081.png" : "https://cdn-icons-png.flaticon.com/512/11626/11626082.png"; 
+        }
+        
+        document.getElementById('status-teks').innerText = status;
+        document.getElementById('status-teks').style.color = color;
+        document.getElementById('img-visual').src = url;
+        document.getElementById('saran-teks').innerText = saran;
+        renderChart(bmi, color);
+    };
+
+    function renderChart(bmi, color) {
+        const { ComposedChart, XAxis, YAxis, ReferenceBar, ReferenceDot } = Recharts;
+        const container = document.getElementById('bmi-chart-container');
+        if(!bmiRoot) bmiRoot = ReactDOM.createRoot(container);
+        
+        bmiRoot.render(React.createElement(ComposedChart, { width: 300, height: 60, data: [{a:1}], layout: "vertical" },
+            React.createElement(XAxis, { type: "number", domain: [10, 40], hide: true }),
+            React.createElement(YAxis, { type: "category", hide: true }),
+            React.createElement(ReferenceBar, { x1: 10, x2: 18.5, fill: "#b3e5fc", fillOpacity: 0.6 }),
+            React.createElement(ReferenceBar, { x1: 18.5, x2: 25, fill: "#aed581", fillOpacity: 0.6 }),
+            React.createElement(ReferenceBar, { x1: 25, x2: 40, fill: "#ffb74d", fillOpacity: 0.6 }),
+            React.createElement(ReferenceDot, { x: Math.min(Math.max(bmi, 10), 39), y: 0, r: 8, fill: color, stroke: "#fff" })
+        ));
     }
 
-    function mulaiKuis(tipe) {
-        // Mengambil data dari variabel di file soal_a1_b2.js
+    // Features
+    window.copyAndShare = () => {
+        const link = document.getElementById('link-display').innerText;
+        navigator.clipboard.writeText(link).then(() => {
+            alert("Link tersalin! Tempelkan di sticker LINK IG Story kamu.");
+            window.open("https://www.instagram.com/reels/create/", "_blank");
+        });
+    };
+
+    window.sendToFirebase = async () => {
+        const text = document.getElementById('anon-text').value;
+        if(!text) return alert("Pesan tidak boleh kosong!");
+        if(!receiverID) return alert("Link tidak valid!");
+        
         try {
-            soalAktif = bankSoal[myLevel][currentDay][tipe];
-            indexSoal = 0;
-            document.getElementById('judulKuis').innerText = tipe + " - " + currentDay;
-            document.getElementById('quiz-screen').style.display = 'flex';
-            tampilkanSoal();
+            await addDoc(collection(db, "messages"), { 
+                receiverID: receiverID, 
+                text: text, 
+                timestamp: serverTimestamp() 
+            });
+            alert("Pesan Terkirim! 🤫");
+            document.getElementById('anon-text').value = "";
+            location.href = window.location.origin + window.location.pathname;
         } catch (e) {
-            alert("Ups! Soal belum tersedia untuk " + currentDay + " level ini.");
+            alert("Gagal mengirim: " + e.message);
         }
-    }
+    };
 
-    function tampilkanSoal() {
-        let s = soalAktif[indexSoal];
-        let progress = ((indexSoal) / soalAktif.length) * 100;
-        document.getElementById('progress-fill').style.width = progress + "%";
-        
-        if(s.suara) {
-            document.getElementById('teksTanya').innerHTML = 
-                `<div onclick="putarSuara('${s.suara}')" style="cursor:pointer; color:#ff9fb2;">
-                    ${s.tanya} <br><small style="font-size:12px; color:#aaa;">(Klik untuk dengar suara 🎧)</small>
-                </div>`;
-        } else {
-            document.getElementById('teksTanya').innerText = s.tanya;
-        }
-
-        document.getElementById('areaOpsi').innerHTML = "";
-        s.pilih.forEach(o => {
-            let btn = document.createElement('button');
-            btn.className = "btn-opsi";
-            btn.innerText = o;
-            btn.onclick = () => cekJawaban(o);
-            document.getElementById('areaOpsi').appendChild(btn);
-        });
-    }
-
-    function putarSuara(teks) {
-        let msg = new SpeechSynthesisUtterance(teks);
-        msg.lang = 'en-US';
-        msg.rate = 0.8;
-        window.speechSynthesis.speak(msg);
-    }
-
-    function cekJawaban(jawaban) {
-        let s = soalAktif[indexSoal];
-        if(jawaban === s.benar) {
-            bintang += 5;
-            // Kamu bisa ganti alert dengan animasi CSS agar lebih "premium"
-        } else {
-            hati -= 1;
-        }
-        updateStats();
-        indexSoal++;
-        if(indexSoal < soalAktif.length && hati > 0) {
-            tampilkanSoal();
-        } else {
-            alert("Latihan Selesai! ⭐ +" + (indexSoal * 5));
-            tutupKuis();
-        }
-    }
-
-    function tutupKuis() {
-        document.getElementById('quiz-screen').style.display = 'none';
-        updateStats();
-    }
-
-    function updateStats() {
-        document.getElementById('valBintang').innerText = bintang;
-        document.getElementById('valHati').innerText = hati;
-        document.getElementById('valHatiKuis').innerText = hati;
-        if(hati <= 0) {
-            alert("Yah, nyawamu habis! Istirahat dulu ya.");
-            location.reload(); 
-        }
-    }
-
-    // Fungsi load data materi (File 3)
-    function loadMateri() {
-        let html = "";
-        dataMateri[myLevel].forEach(m => {
-            html += `<div style="background:#fffcfd; border:2px solid #ffccd5; padding:15px; border-radius:15px; margin-bottom:10px; text-align:left">
-                        <b style="color:#ff859d">${m.judul}</b><br><small>${m.isi}</small>
-                     </div>`;
-        });
-        document.getElementById('list-materi').innerHTML = html;
-    }
-
-    // Fungsi load data vocab (File 4)
-    function loadVocab() {
-        let html = "<table style='width:100%; border-collapse:collapse;'>";
-        dataVocab[myLevel].forEach(v => {
-            html += `<tr style='border-bottom:1px solid #ffccd5;'>
-                        <td style='padding:10px; color:#ff859d'><b>${v.en}</b></td>
-                        <td style='padding:10px; color:#888'>${v.id}</td>
-                        <td style='cursor:pointer' onclick="putarSuara('${v.en}')">🔊</td>
-                     </tr>`;
-        });
-        html += "</table>";
-        document.getElementById('list-vocab').innerHTML = html;
-    }
+    window.cekJodoh = () => {
+        const n1 = document.getElementById('nama1').value;
+        const n2 = document.getElementById('nama2').value;
+        if(!n1 || !n2) return alert("Masukkan kedua nama!");
+        const score = Math.floor(Math.random() * 41 + 59); // 59% - 100%
+        document.getElementById('hasilJodoh').innerText = score + "% ❤️";
+    };
 </script>
 </body>
 </html>
