@@ -9,7 +9,6 @@
         :root { --pink-soft: #ffdee9; --pink-bold: #ff85a2; --cream: #fff5f5; --text: #7d5a5a; }
         body { font-family: 'Poppins', sans-serif; background: var(--cream); margin: 0; color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh;}
         
-        /* Container Iklan */
         .ad-box { width: 100%; max-width: 400px; min-height: 50px; margin: 10px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff0f3; border-radius: 15px; overflow: hidden; border: 1px dashed var(--pink-bold); font-size: 10px; color: var(--pink-bold); padding: 5px; box-sizing: border-box; }
 
         nav { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); width: 100%; display: none; justify-content: space-around; padding: 12px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--pink-soft); }
@@ -24,7 +23,7 @@
 
         .visual-container { margin-top: 20px; padding: 15px; background: #fffcfc; border-radius: 20px; display: none; border: 1px solid var(--pink-soft); }
         .body-img-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; }
-        .body-img { width: 120px; height: auto; display: block; filter: drop-shadow(0 5px 8px rgba(255,133,162,0.3)); }
+        .body-img { width: 100px; height: auto; display: block; filter: drop-shadow(0 5px 8px rgba(255,133,162,0.3)); }
         
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: flex; justify-content: center; align-items: center; flex-direction: column; }
         .spinner { width: 40px; height: 40px; border: 4px solid var(--pink-soft); border-top: 4px solid var(--pink-bold); border-radius: 50%; animation: spin 1s infinite; }
@@ -39,7 +38,6 @@
 <div id="loader"><div class="spinner"></div><p>Memuat...</p></div>
 
 <div class="ad-box">
-    <div id="ad-top">Partner Merpati ✨</div>
     <script src="https://pl28970450.profitablecpmratenetwork.com/34/83/cc/3483cc01879a0b87f5698fca3d8b6067.js"></script>
 </div>
 
@@ -53,12 +51,8 @@
 <div class="container">
     <section id="page-login" class="content-page active">
         <h2>Halo, Merpati! ✨</h2>
+        <p style="font-size: 12px; color: #aaa;">Masuk untuk melihat pesan rahasiamu</p>
         <button class="main-btn" onclick="window.handleLogin()">Masuk dengan Google</button>
-        
-        <div style="margin-top: 20px;">
-            <script async="async" data-cfasync="false" src="https://pl28974414.profitablecpmratenetwork.com/fbffb4771c2d97dea17ecc5378bee6a5/invoke.js"></script>
-            <div id="container-fbffb4771c2d97dea17ecc5378bee6a5"></div>
-        </div>
     </section>
 
     <div id="main-content" class="content-page">
@@ -74,10 +68,10 @@
             
             <div id="hasilBMI" class="visual-container">
                 <p id="status-teks" style="font-weight:bold; font-size: 18px; color: var(--pink-bold); margin-bottom: 5px;"></p>
-                <p id="bmi-angka" style="font-size: 14px; color: #999; margin-bottom: 10px;"></p>
                 <div class="body-img-container">
                     <img id="img-visual" class="body-img" src="" alt="Visualisasi">
                 </div>
+                <p id="bmi-angka" style="font-size: 14px; color: #999; margin-bottom: 10px;"></p>
                 <p id="ukuran-badan" style="font-size:13px; font-weight: 600; color: var(--text); background: #fff; padding: 5px; border-radius: 10px;"></p>
                 <p id="saran-teks" style="font-size:12px; margin-top:10px; line-height: 1.5;"></p>
             </div>
@@ -85,13 +79,12 @@
 
         <section id="pesan" class="sub-page">
             <h2>Kotak Rahasia</h2>
-            <div id="link-display" style="font-size:10px; background:#f9f9f9; padding:10px; border-radius:10px; word-break:break-all;"></div>
+            <div id="link-display" style="font-size:10px; background:#f9f9f9; padding:10px; border-radius:10px; word-break:break-all; border: 1px solid #eee;"></div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:10px;">
-                <button class="main-btn" style="font-size:10px;" onclick="window.copyLink()">Salin</button>
+                <button class="main-btn" style="font-size:10px;" onclick="window.copyLink()">Salin Link</button>
                 <button class="main-btn" style="font-size:10px; background:#25D366;" onclick="window.shareWA()">WhatsApp</button>
             </div>
-            <button class="main-btn" style="font-size:11px;" onclick="window.shareIG()">Share ke IG Story</button>
-            <div id="list-pesan" style="margin-top:20px;"></div>
+            <div id="list-pesan" style="margin-top:20px; max-height: 300px; overflow-y: auto;"></div>
         </section>
 
         <section id="jodoh" class="sub-page">
@@ -100,11 +93,8 @@
             <input type="text" id="nama2" placeholder="Nama Pasangan">
             <button class="main-btn" onclick="window.cekJodoh()">Cek ❤️</button>
             <h1 id="hasilJodoh" style="color:var(--pink-bold);"></h1>
-            
             <div style="margin-top:15px;">
-                <script>
-                    atOptions = { 'key' : '0d9622e9e779ea401d2f05433e1b0674', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-                </script>
+                <script> atOptions = { 'key' : '0d9622e9e779ea401d2f05433e1b0674', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
                 <script src="https://www.highperformanceformat.com/0d9622e9e779ea401d2f05433e1b0674/invoke.js"></script>
             </div>
         </section>
@@ -112,14 +102,16 @@
 
     <section id="page-send-msg" class="content-page">
         <h2>Kirim Pesan ✨</h2>
-        <textarea id="anon-text" rows="4" placeholder="Tulis rahasia..."></textarea>
-        <button class="main-btn" onclick="window.sendToFirebase()">Kirim 🤫</button>
+        <p style="font-size: 11px; margin-bottom: 10px;">Tulis pesan rahasiamu untuk temanmu secara anonim.</p>
+        <textarea id="anon-text" rows="4" placeholder="Tulis rahasia di sini..."></textarea>
+        <button class="main-btn" onclick="window.sendToFirebase()">Kirim Sekarang 🤫</button>
+        <p style="font-size: 10px; margin-top: 15px; color: #ccc;">Muat ulang halaman untuk buat kotakmu sendiri.</p>
     </section>
 </div>
 
 <div class="ad-box">
-    <div id="ad-bottom">Promosi Spesial Merpati 🌸</div>
-    <script src="https://pl28971006.profitablecpmratenetwork.com/b5/06/21/b5062164c8e2ce615f79e8b920276e0b.js"></script>
+    <script async="async" data-cfasync="false" src="https://pl28974414.profitablecpmratenetwork.com/fbffb4771c2d97dea17ecc5378bee6a5/invoke.js"></script>
+    <div id="container-fbffb4771c2d97dea17ecc5378bee6a5"></div>
 </div>
 
 <div class="footer-name" style="color:#ccc; font-size:10px; margin-bottom:20px;">merpati digital creative</div>
@@ -143,28 +135,26 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
     const urlParams = new URLSearchParams(window.location.search);
-    const receiverID = urlParams.get('to');
+    const receiverID = urlParams.get('to'); // ID tujuan dari link
 
     window.handleLogin = () => signInWithPopup(auth, provider);
-    window.logout = () => signOut(auth).then(() => location.href = location.origin + location.pathname);
+    window.logout = () => signOut(auth).then(() => { window.location.href = window.location.origin + window.location.pathname; });
 
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
         document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
-        if (user) {
-            if (receiverID && receiverID !== user.uid) { 
-                document.getElementById('page-send-msg').classList.add('active');
-            } else { 
-                document.getElementById('main-content').classList.add('active'); 
-                document.getElementById('main-nav').style.display = 'flex';
-                setupUser(user);
-            }
+        
+        if (receiverID) {
+            // Jika ada '?to=', tampilkan halaman kirim pesan (baik sudah login atau belum)
+            document.getElementById('page-send-msg').classList.add('active');
+        } else if (user) {
+            // Jika tidak ada '?to=' dan sudah login, tampilkan dashboard utama
+            document.getElementById('main-content').classList.add('active'); 
+            document.getElementById('main-nav').style.display = 'flex';
+            setupUser(user);
         } else {
-            if (receiverID) {
-                document.getElementById('page-send-msg').classList.add('active');
-            } else {
-                document.getElementById('page-login').classList.add('active');
-            }
+            // Jika tidak ada '?to=' dan belum login, tampilkan halaman login
+            document.getElementById('page-login').classList.add('active');
         }
     });
 
@@ -174,15 +164,20 @@
     }
 
     function setupUser(user) {
-        const link = window.location.origin + window.location.pathname + "?to=" + user.uid;
-        document.getElementById('link-display').innerText = link;
+        const myLink = window.location.origin + window.location.pathname + "?to=" + user.uid;
+        document.getElementById('link-display').innerText = myLink;
+        
         const q = query(collection(db, "messages"), where("receiverID", "==", user.uid), orderBy("timestamp", "desc"));
         onSnapshot(q, (s) => {
-            let h = ""; s.forEach(d => h += `<div style="background:#fffcfc; padding:10px; margin:5px 0; border-left:4px solid var(--pink-bold); text-align:left; font-size:12px; border-radius: 5px;">${d.data().text}</div>`);
-            document.getElementById('list-pesan').innerHTML = h || "<p style='font-size:12px; color:#aaa;'>Belum ada pesan rahasia.</p>";
+            let h = ""; 
+            s.forEach(d => {
+                h += `<div style="background:#fff; border: 1px solid var(--pink-soft); padding:12px; margin:8px 0; border-left:5px solid var(--pink-bold); text-align:left; font-size:13px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">${d.data().text}</div>`;
+            });
+            document.getElementById('list-pesan').innerHTML = h || "<p style='font-size:12px; color:#aaa; margin-top:20px;'>Belum ada pesan rahasia yang masuk.</p>";
         });
     }
 
+    // --- PERBAIKAN VISUALIZER (GAMBAR WANITA FIX) ---
     window.hitungVisual = () => {
         const isWanita = document.getElementById('genderWanita').checked;
         const bb = parseFloat(document.getElementById('berat').value);
@@ -196,27 +191,21 @@
         
         let txt = "", img = "", srn = "", detilUkuran = "";
 
-        const pinggang = isWanita ? (tb * 0.40).toFixed(0) : (tb * 0.44).toFixed(0);
-        const pinggul = isWanita ? (tb * 0.56).toFixed(0) : (tb * 0.50).toFixed(0);
-        const dada = isWanita ? (tb * 0.52).toFixed(0) : (tb * 0.58).toFixed(0);
-
         if(isWanita) {
-            detilUkuran = `Estimasi: Dada ${dada}cm | Pinggang ${pinggang}cm | Pinggul ${pinggul}cm`;
+            detilUkuran = `Estimasi: Dada ${(tb*0.52).toFixed(0)}cm | Pinggang ${(tb*0.4).toFixed(0)}cm | Pinggul ${(tb*0.56).toFixed(0)}cm`;
             if(bmi < 18.5) {
                 txt = "Kurus (Underweight)";
                 img = "https://cdn-icons-png.flaticon.com/512/6997/6997666.png"; 
-                srn = "Tubuhmu ramping, Merpati. Yuk, tambah asupan nutrisi dan protein!";
             } else if(bmi < 25) {
                 txt = "Ideal ✨";
                 img = "https://cdn-icons-png.flaticon.com/512/6997/6997671.png";
-                srn = "Bentuk tubuhmu sangat proporsional! Pertahankan ya.";
             } else {
                 txt = "Berisi / Overweight";
                 img = "https://cdn-icons-png.flaticon.com/512/6998/6998065.png";
-                srn = "Wah terlihat berisi! Yuk, imbangi dengan olahraga rutin.";
             }
+            srn = "Jaga pola makan sehat ya cantik!";
         } else {
-            detilUkuran = `Estimasi: Bahu ${pinggul}cm | Pinggang ${pinggang}cm | Dada ${dada}cm`;
+            detilUkuran = `Estimasi: Bahu ${(tb*0.50).toFixed(0)}cm | Pinggang ${(tb*0.44).toFixed(0)}cm | Dada ${(tb*0.58).toFixed(0)}cm`;
             if(bmi < 18.5) {
                 txt = "Kurus (Underweight)";
                 img = "https://cdn-icons-png.flaticon.com/512/4202/4202831.png";
@@ -227,7 +216,7 @@
                 txt = "Berisi / Overweight";
                 img = "https://cdn-icons-png.flaticon.com/512/4202/4202835.png";
             }
-            srn = "Tetap aktif dan jaga pola makan sehat agar stamina terjaga.";
+            srn = "Tetap aktif berolahraga bro!";
         }
 
         document.getElementById('status-teks').innerText = txt;
@@ -237,23 +226,32 @@
         document.getElementById('saran-teks').innerText = srn;
     };
 
-    window.copyLink = () => { navigator.clipboard.writeText(document.getElementById('link-display').innerText).then(()=>alert("Link tersalin, Merpati!")); };
-    window.shareWA = () => { window.open("https://wa.me/?text=Hai! Kirim pesan rahasia ke aku yuk, anonim kok 🤫: " + document.getElementById('link-display').innerText); };
-    window.shareIG = () => { window.copyLink(); alert("Link disalin! Sekarang Merpati bisa tempel link-nya di IG Story ya."); window.location.href="instagram://story-camera"; };
-    
+    // --- PERBAIKAN KIRIM PESAN ---
     window.sendToFirebase = async () => {
         const t = document.getElementById('anon-text').value;
-        if(!t) return alert("Pesannya masih kosong, Merpati!");
-        if(!receiverID) return alert("Penerima tidak valid.");
-        await addDoc(collection(db, "messages"), { receiverID, text: t, timestamp: serverTimestamp() });
-        alert("Pesan rahasia terkirim! 🤫");
-        document.getElementById('anon-text').value = ''; 
+        if(!t) return alert("Pesannya masih kosong!");
+        if(!receiverID) return alert("Penerima tidak ditemukan. Pastikan link benar.");
+
+        try {
+            await addDoc(collection(db, "messages"), { 
+                receiverID: receiverID, 
+                text: t, 
+                timestamp: serverTimestamp() 
+            });
+            alert("Pesan rahasia terkirim! 🤫");
+            document.getElementById('anon-text').value = ''; 
+        } catch (e) {
+            console.error(e);
+            alert("Gagal mengirim pesan.");
+        }
     };
-    
+
+    window.copyLink = () => { navigator.clipboard.writeText(document.getElementById('link-display').innerText).then(()=>alert("Link tersalin!")); };
+    window.shareWA = () => { window.open("https://wa.me/?text=Hai! Kirim pesan rahasia ke aku yuk, anonim kok 🤫: " + document.getElementById('link-display').innerText); };
     window.cekJodoh = () => { 
         const n1 = document.getElementById('nama1').value;
         const n2 = document.getElementById('nama2').value;
-        if(!n1 || !n2) return alert("Isi kedua namanya dulu ya!");
+        if(!n1 || !n2) return alert("Isi kedua namanya dulu!");
         document.getElementById('hasilJodoh').innerText = Math.floor(Math.random()*40 + 60) + "% ❤️"; 
     };
 </script>
