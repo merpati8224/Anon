@@ -219,39 +219,45 @@
 
     // Fitur Kirim Pesan
     const btnSend = document.getElementById('btnSendAnon');
-    if (btnSend) {
-        btnSend.addEventListener('click', async () => {
-            const text = document.getElementById('anon-text').value;
-            const receiverID = getTargetID();
+if (btnSend) {
+    btnSend.onclick = async () => { // Menggunakan onclick agar lebih pasti terpanggil
+        const textInput = document.getElementById('anon-text');
+        const text = textInput.value.trim();
+        const receiverID = getTargetID();
 
-            if (!text.trim()) return alert("Tulis pesanmu dulu!");
-            if (!receiverID) return alert("ID tujuan hilang. Pastikan link benar.");
+        console.log("Mencoba mengirim ke:", receiverID); // Cek di console
 
-            btnSend.disabled = true;
-            btnSend.innerText = "Mengirim...";
+        if (!text) return alert("Tulis pesanmu dulu!");
+        if (!receiverID) return alert("Link tidak valid (ID tujuan tidak ada).");
 
-            try {
-                await addDoc(collection(db, "messages"), {
-                    receiverID: receiverID,
-                    text: text,
-                    timestamp: serverTimestamp()
-                });
+        btnSend.disabled = true;
+        btnSend.innerText = "Sabar, lagi ngirim... ✨";
 
-                document.getElementById('anon-text').value = "";
-                document.getElementById('sentStatus').style.display = "block";
-                btnSend.innerText = "Kirim Lagi 🤫";
-                
-                setTimeout(() => {
-                    document.getElementById('sentStatus').style.display = "none";
-                }, 5000);
-            } catch (e) {
-                console.error("Error sending: ", e);
-                alert("Gagal kirim. Cek koneksi internet.");
-            } finally {
-                btnSend.disabled = false;
-            }
-        });
-    }
+        try {
+            // Kita pakai database 'db' yang sudah di-init di atas
+            await addDoc(collection(db, "messages"), {
+                receiverID: receiverID,
+                text: text,
+                timestamp: serverTimestamp()
+            });
+
+            console.log("Berhasil terkirim ke Firestore!");
+            textInput.value = "";
+            document.getElementById('sentStatus').style.display = "block";
+            btnSend.innerText = "Kirim Lagi 🤫";
+            
+            setTimeout(() => {
+                document.getElementById('sentStatus').style.display = "none";
+            }, 4000);
+        } catch (e) {
+            console.error("EROR FIRESTORE:", e);
+            alert("Gagal kirim! Error: " + e.message);
+            btnSend.innerText = "Coba Lagi 🤫";
+        } finally {
+            btnSend.disabled = false;
+        }
+    };
+}
 
     // Visualizer Logic
     window.hitungVisual = () => {
