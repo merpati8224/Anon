@@ -74,7 +74,7 @@
     <section id="page-login" class="content-page">
         <h2>Halo, Merpati! ✨</h2>
         <p style="font-size: 12px; color: #aaa;">Masuk untuk buat link rahasiamu</p>
-        <button class="main-btn" id="btnSendAnon" onclick="window.sendAnonMessage()">Kirim Sekarang 🤫</button>
+        <button class="main-btn" onclick="window.handleLogin()">Masuk dengan Google 🚀</button>
     </section>
 
     <div id="main-content" class="content-page">
@@ -128,7 +128,7 @@
         <h2>Kirim Pesan ✨</h2>
         <p style="font-size: 12px;">Pesanmu akan dikirim secara anonim.</p>
         <textarea id="anon-text" rows="4" placeholder="Tulis rahasia di sini..."></textarea>
-        <button class="main-btn" id="btnSendAnon">Kirim Sekarang 🤫</button>
+        <button class="main-btn" id="btnSendReal" onclick="window.sendAnonMessage()">Kirim Sekarang 🤫</button>
         <div id="sentStatus" style="display:none; color: #ff85a2; font-weight: bold; margin-top:15px; background: #fff5f6; padding: 10px; border-radius: 10px;">✅ Pesan Rahasia Terkirim!</div>
     </section>
 </div>
@@ -162,7 +162,7 @@
 
     const getTargetID = () => new URLSearchParams(window.location.search).get('to');
 
-    // Global Functions
+    // Mendaftarkan Fungsi ke Window agar bisa diakses onclick HTML
     window.handleLogin = () => signInWithPopup(auth, provider);
     window.logout = () => signOut(auth).then(() => { 
         window.location.href = window.location.origin + window.location.pathname; 
@@ -173,29 +173,27 @@
         document.getElementById(id).classList.add('active');
     };
 
-    // State Handler
+    // State Handler: Menentukan Halaman Mana yang Tampil
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
         const idTujuan = getTargetID();
         
-        // Sembunyikan semua halaman dulu
         document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
 
         if (idTujuan) {
-            // Jika link mengandung ID tujuan (?to=...), buka halaman kirim pesan
+            // Jika link mengandung ?to=..., buka halaman kirim pesan (tanpa perlu login)
             document.getElementById('page-send-msg').classList.add('active');
         } else if (user) {
-            // Jika sudah login dan tidak sedang kirim ke orang lain
+            // Jika sudah login, buka dashboard
             document.getElementById('main-content').classList.add('active'); 
             document.getElementById('main-nav').style.display = 'flex';
             setupUserDashboard(user);
         } else {
-            // Jika belum login
+            // Belum login & bukan link kirim pesan
             document.getElementById('page-login').classList.add('active');
         }
     });
 
-    // Dashboard: Ambil Link & Daftar Pesan
     function setupUserDashboard(user) {
         const myLink = window.location.origin + window.location.pathname + "?to=" + user.uid;
         document.getElementById('link-display').innerText = myLink;
@@ -217,41 +215,41 @@
         });
     }
     
-// Deklarasikan fungsi kirim ke dalam object window agar bisa diakses HTML
-window.sendAnonMessage = async () => {
-    const textInput = document.getElementById('anon-text');
-    const btnSend = document.getElementById('btnSendAnon');
-    const text = textInput.value.trim();
-    const receiverID = new URLSearchParams(window.location.search).get('to');
+    // FUNGSI UTAMA: Kirim Pesan Anonim
+    window.sendAnonMessage = async () => {
+        const textInput = document.getElementById('anon-text');
+        const btnSend = document.getElementById('btnSendReal');
+        const text = textInput.value.trim();
+        const receiverID = getTargetID();
 
-    if (!text) return alert("Tulis pesanmu dulu!");
-    if (!receiverID) return alert("ID tujuan tidak ditemukan.");
+        if (!text) return alert("Tulis pesanmu dulu!");
+        if (!receiverID) return alert("ID tujuan tidak ditemukan. Pastikan link benar!");
 
-    btnSend.disabled = true;
-    btnSend.innerText = "Sabar, lagi ngirim... ✨";
+        btnSend.disabled = true;
+        btnSend.innerText = "Sabar, lagi ngirim... ✨";
 
-    try {
-        await addDoc(collection(db, "messages"), {
-            receiverID: receiverID,
-            text: text,
-            timestamp: serverTimestamp()
-        });
+        try {
+            await addDoc(collection(db, "messages"), {
+                receiverID: receiverID,
+                text: text,
+                timestamp: serverTimestamp()
+            });
 
-        textInput.value = "";
-        document.getElementById('sentStatus').style.display = "block";
-        btnSend.innerText = "Kirim Lagi 🤫";
-        
-        setTimeout(() => {
-            document.getElementById('sentStatus').style.display = "none";
-        }, 4000);
-    } catch (e) {
-        console.error("Error detail:", e);
-        alert("Gagal kirim! Pastikan koneksi stabil.");
-        btnSend.innerText = "Coba Lagi 🤫";
-    } finally {
-        btnSend.disabled = false;
-    }
-};
+            textInput.value = "";
+            document.getElementById('sentStatus').style.display = "block";
+            btnSend.innerText = "Kirim Lagi 🤫";
+            
+            setTimeout(() => {
+                document.getElementById('sentStatus').style.display = "none";
+            }, 4000);
+        } catch (e) {
+            console.error("Error detail:", e);
+            alert("Gagal kirim! " + e.message);
+            btnSend.innerText = "Coba Lagi 🤫";
+        } finally {
+            btnSend.disabled = false;
+        }
+    };
      
     // Visualizer Logic
     window.hitungVisual = () => {
