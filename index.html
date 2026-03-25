@@ -23,7 +23,7 @@
 
         .visual-container { margin-top: 20px; padding: 15px; background: #fffcfc; border-radius: 20px; display: none; border: 1px solid var(--pink-soft); }
         .body-img-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; }
-        .body-img { width: 100px; height: auto; display: block; filter: drop-shadow(0 5px 8px rgba(255,133,162,0.3)); }
+        .body-img { width: 120px; height: auto; display: block; filter: drop-shadow(0 5px 8px rgba(255,133,162,0.3)); }
         
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: flex; justify-content: center; align-items: center; flex-direction: column; }
         .spinner { width: 40px; height: 40px; border: 4px solid var(--pink-soft); border-top: 4px solid var(--pink-bold); border-radius: 50%; animation: spin 1s infinite; }
@@ -59,8 +59,8 @@
         <section id="ideal" class="sub-page active">
             <h2>Body Visualizer</h2>
             <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 10px;">
-                <label><input type="radio" name="gender" value="pria" id="genderPria" checked> 👨 Pria</label>
-                <label><input type="radio" name="gender" value="wanita" id="genderWanita"> 👩 Wanita</label>
+                <label><input type="radio" name="gender" value="pria" id="genderPria"> 👨 Pria</label>
+                <label><input type="radio" name="gender" value="wanita" id="genderWanita" checked> 👩 Wanita</label>
             </div>
             <input type="number" id="tinggi" placeholder="Tinggi (cm)">
             <input type="number" id="berat" placeholder="Berat (kg)">
@@ -72,7 +72,7 @@
                     <img id="img-visual" class="body-img" src="" alt="Visualisasi">
                 </div>
                 <p id="bmi-angka" style="font-size: 14px; color: #999; margin-bottom: 10px;"></p>
-                <p id="ukuran-badan" style="font-size:13px; font-weight: 600; color: var(--text); background: #fff; padding: 5px; border-radius: 10px;"></p>
+                <p id="ukuran-badan" style="font-size:12px; font-weight: 600; color: var(--text); background: #fff5f6; padding: 10px; border-radius: 10px; border: 1px solid var(--pink-soft);"></p>
                 <p id="saran-teks" style="font-size:12px; margin-top:10px; line-height: 1.5;"></p>
             </div>
         </section>
@@ -102,7 +102,7 @@
 
     <section id="page-send-msg" class="content-page">
         <h2>Kirim Pesan ✨</h2>
-        <p style="font-size: 11px; margin-bottom: 10px;">Tulis pesan rahasiamu untuk temanmu secara anonim.</p>
+        <p style="font-size: 11px; margin-bottom: 10px;">Tulis pesan rahasiamu secara anonim.</p>
         <textarea id="anon-text" rows="4" placeholder="Tulis rahasia di sini..."></textarea>
         <button class="main-btn" onclick="window.sendToFirebase()">Kirim Sekarang 🤫</button>
         <p style="font-size: 10px; margin-top: 15px; color: #ccc;">Muat ulang halaman untuk buat kotakmu sendiri.</p>
@@ -134,26 +134,31 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
+
+    // TANGKAP ID DARI LINK
     const urlParams = new URLSearchParams(window.location.search);
-    const receiverID = urlParams.get('to'); // ID tujuan dari link
+    const idTujuan = urlParams.get('to'); 
 
     window.handleLogin = () => signInWithPopup(auth, provider);
-    window.logout = () => signOut(auth).then(() => { window.location.href = window.location.origin + window.location.pathname; });
+    window.logout = () => signOut(auth).then(() => { 
+        window.location.href = window.location.origin + window.location.pathname; 
+    });
 
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
         document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
         
-        if (receiverID) {
-            // Jika ada '?to=', tampilkan halaman kirim pesan (baik sudah login atau belum)
+        if (idTujuan) {
+            // Jika buka link orang lain, langsung ke halaman kirim pesan
             document.getElementById('page-send-msg').classList.add('active');
+            document.getElementById('main-nav').style.display = 'none';
         } else if (user) {
-            // Jika tidak ada '?to=' dan sudah login, tampilkan dashboard utama
+            // Jika login sendiri, buka dashboard
             document.getElementById('main-content').classList.add('active'); 
             document.getElementById('main-nav').style.display = 'flex';
             setupUser(user);
         } else {
-            // Jika tidak ada '?to=' dan belum login, tampilkan halaman login
+            // Jika baru buka web, ke halaman login
             document.getElementById('page-login').classList.add('active');
         }
     });
@@ -164,39 +169,41 @@
     }
 
     function setupUser(user) {
+        // Buat link dengan UID asli Google
         const myLink = window.location.origin + window.location.pathname + "?to=" + user.uid;
         document.getElementById('link-display').innerText = myLink;
         
+        // Ambil pesan berdasarkan receiverID (UID Google)
         const q = query(collection(db, "messages"), where("receiverID", "==", user.uid), orderBy("timestamp", "desc"));
-        onSnapshot(q, (s) => {
-            let h = ""; 
-            s.forEach(d => {
-                h += `<div style="background:#fff; border: 1px solid var(--pink-soft); padding:12px; margin:8px 0; border-left:5px solid var(--pink-bold); text-align:left; font-size:13px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">${d.data().text}</div>`;
+        onSnapshot(q, (snapshot) => {
+            let html = ""; 
+            snapshot.forEach(doc => {
+                html += `<div style="background:#fff; border: 1px solid var(--pink-soft); padding:12px; margin:8px 0; border-left:5px solid var(--pink-bold); text-align:left; font-size:13px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">${doc.data().text}</div>`;
             });
-            document.getElementById('list-pesan').innerHTML = h || "<p style='font-size:12px; color:#aaa; margin-top:20px;'>Belum ada pesan rahasia yang masuk.</p>";
+            document.getElementById('list-pesan').innerHTML = html || "<p style='font-size:12px; color:#aaa; margin-top:20px;'>Belum ada pesan rahasia yang masuk.</p>";
         });
     }
 
-    // --- PERBAIKAN VISUALIZER (GAMBAR WANITA FIX) ---
+    // --- FIX VISUALIZER GENDER & UKURAN ---
     window.hitungVisual = () => {
         const isWanita = document.getElementById('genderWanita').checked;
         const bb = parseFloat(document.getElementById('berat').value);
         const tb = parseFloat(document.getElementById('tinggi').value);
         
-        if(!bb || !tb) return alert("Isi data tinggi dan berat badan dulu ya, Merpati!");
+        if(!bb || !tb) return alert("Isi data tinggi dan berat dulu!");
 
         const bmi = bb / ((tb/100)**2);
         const resContainer = document.getElementById('hasilBMI');
         resContainer.style.display = "block";
         
-        let txt = "", img = "", srn = "", detilUkuran = "";
+        let txt = "", img = "", srn = "", detil = "";
 
         if(isWanita) {
-            detilUkuran = `Estimasi: Dada ${(tb*0.52).toFixed(0)}cm | Pinggang ${(tb*0.4).toFixed(0)}cm | Pinggul ${(tb*0.56).toFixed(0)}cm`;
+            detil = `Bust: ${(tb*0.53).toFixed(0)}cm | Waist: ${(tb*0.39).toFixed(0)}cm | Hips: ${(tb*0.55).toFixed(0)}cm`;
             if(bmi < 18.5) {
                 txt = "Kurus (Underweight)";
                 img = "https://cdn-icons-png.flaticon.com/512/6997/6997666.png"; 
-            } else if(bmi < 25) {
+            } else if(bmi < 24.9) {
                 txt = "Ideal ✨";
                 img = "https://cdn-icons-png.flaticon.com/512/6997/6997671.png";
             } else {
@@ -205,11 +212,11 @@
             }
             srn = "Jaga pola makan sehat ya cantik!";
         } else {
-            detilUkuran = `Estimasi: Bahu ${(tb*0.50).toFixed(0)}cm | Pinggang ${(tb*0.44).toFixed(0)}cm | Dada ${(tb*0.58).toFixed(0)}cm`;
+            detil = `Chest: ${(tb*0.55).toFixed(0)}cm | Waist: ${(tb*0.45).toFixed(0)}cm | Shoulders: ${(tb*0.60).toFixed(0)}cm`;
             if(bmi < 18.5) {
                 txt = "Kurus (Underweight)";
                 img = "https://cdn-icons-png.flaticon.com/512/4202/4202831.png";
-            } else if(bmi < 25) {
+            } else if(bmi < 24.9) {
                 txt = "Ideal ✨";
                 img = "https://cdn-icons-png.flaticon.com/512/4202/4202843.png";
             } else {
@@ -221,28 +228,28 @@
 
         document.getElementById('status-teks').innerText = txt;
         document.getElementById('bmi-angka').innerText = `Skor BMI: ${bmi.toFixed(1)}`;
-        document.getElementById('ukuran-badan').innerText = detilUkuran;
+        document.getElementById('ukuran-badan').innerText = "Estimasi Ukuran: " + detil;
         document.getElementById('img-visual').src = img;
         document.getElementById('saran-teks').innerText = srn;
     };
 
-    // --- PERBAIKAN KIRIM PESAN ---
+    // --- FIX PENGIRIMAN PESAN KE UID ---
     window.sendToFirebase = async () => {
-        const t = document.getElementById('anon-text').value;
-        if(!t) return alert("Pesannya masih kosong!");
-        if(!receiverID) return alert("Penerima tidak ditemukan. Pastikan link benar.");
+        const text = document.getElementById('anon-text').value;
+        if(!text) return alert("Pesan tidak boleh kosong!");
+        if(!idTujuan) return alert("ID Penerima tidak ditemukan dalam link!");
 
         try {
             await addDoc(collection(db, "messages"), { 
-                receiverID: receiverID, 
-                text: t, 
+                receiverID: idTujuan, // Menggunakan ID Diana dari link (?to=...)
+                text: text, 
                 timestamp: serverTimestamp() 
             });
             alert("Pesan rahasia terkirim! 🤫");
             document.getElementById('anon-text').value = ''; 
         } catch (e) {
             console.error(e);
-            alert("Gagal mengirim pesan.");
+            alert("Gagal kirim. Cek Rules Firestore Anda.");
         }
     };
 
