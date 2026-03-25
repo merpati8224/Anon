@@ -205,7 +205,7 @@
         const textInput = document.getElementById('anon-text');
         const btnSend = document.getElementById('btnSendReal');
         const text = textInput.value.trim();
-        const receiverID = getTargetID();
+        const receiverID = getTargetID(); // Diambil tepat saat tombol ditekan
 
         if (!text) return alert("Tulis pesanmu dulu!");
         if (!receiverID) return alert("ID tujuan tidak ditemukan!");
