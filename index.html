@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { --pink-soft: #ffdee9; --pink-bold: #ff85a2; --cream: #fff5f5; --text: #7d5a5a; }
-        body { font-family: 'Poppins', sans-serif; background: var(--cream); margin: 0; color: var(--text); display: flex; flex-direction: column; align-items: center; }
+        body { font-family: 'Poppins', sans-serif; background: var(--cream); margin: 0; color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh;}
         
         /* Container Iklan */
         .ad-box { width: 100%; max-width: 400px; min-height: 100px; margin: 10px auto; display: flex; justify-content: center; align-items: center; background: #fff; border-radius: 15px; overflow: hidden; border: 1px dashed var(--pink-soft); }
@@ -15,19 +15,26 @@
         nav { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); width: 100%; display: none; justify-content: space-around; padding: 12px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--pink-soft); }
         nav button { background: none; border: none; font-weight: 600; font-size: 11px; cursor: pointer; color: var(--text); }
 
-        .container { background: white; width: 92%; max-width: 400px; margin: 15px auto; padding: 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255,182,193,0.2); text-align: center; box-sizing: border-box; }
+        .container { background: white; width: 92%; max-width: 400px; margin: 15px auto; padding: 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255,182,193,0.2); text-align: center; box-sizing: border-box; flex-grow: 1;}
         h2 { font-family: 'Dancing Script', cursive; color: var(--pink-bold); font-size: 30px; margin-bottom: 20px; }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #fff5f6; border-radius: 12px; font-family: 'Poppins', sans-serif; box-sizing: border-box; }
-        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: transform 0.1s; }
+        .main-btn:active { transform: scale(0.98); }
 
         /* Visualisasi Badan Full Body */
         .visual-container { margin-top: 20px; padding: 15px; background: #fffcfc; border-radius: 20px; display: none; }
-        .body-img { width: 140px; height: auto; margin: 10px auto; display: block; filter: drop-shadow(0 5px 8px rgba(0,0,0,0.1)); }
+        .body-img-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; }
+        .body-img { width: auto; height: 250px; display: block; filter: drop-shadow(0 5px 8px rgba(0,0,0,0.1)); object-fit: contain;}
         
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: flex; justify-content: center; align-items: center; flex-direction: column; }
         .spinner { width: 40px; height: 40px; border: 4px solid var(--pink-soft); border-top: 4px solid var(--pink-bold); border-radius: 50%; animation: spin 1s infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Gaya Konten */
+        .content-page, .sub-page { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
+        .content-page.active, .sub-page.active { display: block; opacity: 1; }
+
     </style>
 </head>
 <body>
@@ -39,38 +46,41 @@
 </div>
 
 <nav id="main-nav">
-    <button onclick="showPage('ideal')">📏 Ideal</button>
-    <button onclick="showPage('pesan')">📩 Pesan</button>
-    <button onclick="showPage('jodoh')">❤️ Jodoh</button>
+    <button onclick="showSubPage('ideal')">📏 Ideal</button>
+    <button onclick="showSubPage('pesan')">📩 Pesan</button>
+    <button onclick="showSubPage('jodoh')">❤️ Jodoh</button>
     <button onclick="window.logout()">🚪 Keluar</button>
 </nav>
 
 <div class="container">
-    <section id="page-login" class="content-page">
+    <section id="page-login" class="content-page active">
         <h2>Halo, Merpati! ✨</h2>
         <button class="main-btn" onclick="window.handleLogin()">Masuk dengan Google</button>
     </section>
 
-    <div id="main-content" style="display:none;">
+    <div id="main-content" class="content-page">
         
-        <section id="ideal" class="sub-page">
+        <section id="ideal" class="sub-page active">
             <h2>Body Visualizer</h2>
-            <select id="gender">
-                <option value="wanita">👩 Wanita</option>
-                <option value="pria">👨 Pria</option>
-            </select>
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                <label><input type="radio" name="gender" value="pria" id="genderPria" checked> 👨 Pria</label>
+                <label><input type="radio" name="gender" value="wanita" id="genderWanita"> 👩 Wanita</label>
+            </div>
             <input type="number" id="tinggi" placeholder="Tinggi (cm)">
             <input type="number" id="berat" placeholder="Berat (kg)">
             <button class="main-btn" onclick="window.hitungVisual()">Lihat Bentuk Tubuh</button>
             
             <div id="hasilBMI" class="visual-container">
-                <p id="status-teks" style="font-weight:bold; font-size: 18px; color: var(--pink-bold);"></p>
-                <img id="img-visual" class="body-img" src="">
-                <p id="saran-teks" style="font-size:12px; margin-top:10px;"></p>
+                <p id="status-teks" style="font-weight:bold; font-size: 18px; color: var(--pink-bold); margin-bottom: 5px;"></p>
+                <p id="bmi-angka" style="font-size: 14px; color: #999; margin: 0;"></p>
+                <div class="body-img-container">
+                    <img id="img-visual" class="body-img" src="" alt="Visualisasi Tubuh">
+                </div>
+                <p id="saran-teks" style="font-size:12px; margin-top:10px; line-height: 1.5;"></p>
             </div>
         </section>
 
-        <section id="pesan" class="sub-page" style="display:none;">
+        <section id="pesan" class="sub-page">
             <h2>Kotak Rahasia</h2>
             <div id="link-display" style="font-size:10px; background:#f9f9f9; padding:10px; border-radius:10px; word-break:break-all;"></div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:10px;">
@@ -81,7 +91,7 @@
             <div id="list-pesan" style="margin-top:20px;"></div>
         </section>
 
-        <section id="jodoh" class="sub-page" style="display:none;">
+        <section id="jodoh" class="sub-page">
             <h2>Love Meter</h2>
             <input type="text" id="nama1" placeholder="Nama Kamu">
             <input type="text" id="nama2" placeholder="Nama Pasangan">
@@ -90,7 +100,7 @@
         </section>
     </div>
 
-    <section id="page-send-msg" class="content-page" style="display:none;">
+    <section id="page-send-msg" class="content-page">
         <h2>Kirim Pesan ✨</h2>
         <textarea id="anon-text" rows="4" placeholder="Tulis rahasia..."></textarea>
         <button class="main-btn" onclick="window.sendToFirebase()">Kirim 🤫</button>
@@ -104,10 +114,12 @@
 <div class="footer-name" style="color:#ccc; font-size:10px; margin-bottom:20px;">merpati digital creative</div>
 
 <script type="module">
+    // --- INTEGRASI FIREBASE ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+    // Ganti dengan KONFIGURASI FIREBASE ANDA yang sebenarnya
     const firebaseConfig = {
         apiKey: "AIzaSyBRUMOALHTCiJ83lBc1KaYc0QcsSIfw5ek",
         authDomain: "webanonymous-128cd.firebaseapp.com",
@@ -124,109 +136,148 @@
     const urlParams = new URLSearchParams(window.location.search);
     const receiverID = urlParams.get('to');
 
+    // --- AUTENTIKASI ---
     window.handleLogin = () => signInWithPopup(auth, provider);
     window.logout = () => signOut(auth).then(() => location.href = location.origin + location.pathname);
 
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
+        
+        // Sembunyikan semua halaman utama terlebih dahulu
+        document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
+
         if (user) {
+            // Mode kirim pesan anonim ke orang lain
             if (receiverID && receiverID !== user.uid) { 
-                showSection('page-send-msg'); 
+                document.getElementById('page-send-msg').classList.add('active');
             } else { 
-                showSection('main-content'); 
+                // Mode dashboard user sendiri
+                document.getElementById('main-content').classList.add('active'); 
                 document.getElementById('main-nav').style.display = 'flex';
                 setupUser(user);
             }
         } else {
-            showSection(receiverID ? 'page-send-msg' : 'page-login');
+            // Belum login
+            if (receiverID) {
+                // Bisa kirim pesan tanpa login
+                document.getElementById('page-send-msg').classList.add('active');
+            } else {
+                // Tampilkan halaman login
+                document.getElementById('page-login').classList.add('active');
+            }
         }
     });
 
-    function showSection(id) {
-        document.querySelectorAll('.content-page').forEach(s => s.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
+    // --- NAVIGASI SUB-PAGE ---
+    window.showSubPage = (id) => {
+        // Hapus class active dari semua sub-page
+        document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+        // Tambahkan class active ke sub-page yang dipilih
+        document.getElementById(id).classList.add('active');
     }
 
-    window.showPage = (id) => {
-        document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
-    }
-
+    // --- FUNGSI UTAMA USER ---
     function setupUser(user) {
         const link = window.location.origin + window.location.pathname + "?to=" + user.uid;
         document.getElementById('link-display').innerText = link;
         const q = query(collection(db, "messages"), where("receiverID", "==", user.uid), orderBy("timestamp", "desc"));
         onSnapshot(q, (s) => {
-            let h = ""; s.forEach(d => h += `<div style="background:#fffcfc; padding:10px; margin:5px; border-left:4px solid var(--pink-bold); text-align:left; font-size:12px;">${d.data().text}</div>`);
-            document.getElementById('list-pesan').innerHTML = h || "Belum ada pesan.";
+            let h = ""; s.forEach(d => h += `<div style="background:#fffcfc; padding:10px; margin:5px 0; border-left:4px solid var(--pink-bold); text-align:left; font-size:12px; border-radius: 5px;">${d.data().text}</div>`);
+            document.getElementById('list-pesan').innerHTML = h || "<p style='font-size:12px; color:#aaa;'>Belum ada pesan rahasia.</p>";
         });
     }
 
-    // LOGIKA BODY VISUALIZER (FULL BODY)
+    // --- LOGIKA BODY VISUALIZER (FULL BODY & KATEGORI BARU) ---
     window.hitungVisual = () => {
-    const gen = document.getElementById('gender').value;
-    const bb = parseFloat(document.getElementById('berat').value);
-    const tb = parseFloat(document.getElementById('tinggi').value);
-    if(!bb || !tb) return alert("Isi data dulu ya!");
+        // Perbaikan pengambilan gender: Cek radio mana yang dipilih
+        const isWanita = document.getElementById('genderWanita').checked;
+        const bb = parseFloat(document.getElementById('berat').value);
+        const tb = parseFloat(document.getElementById('tinggi').value);
+        
+        if(!bb || !tb) return alert("Isi data tinggi dan berat badan dulu ya, Merpati!");
 
-    const bmi = bb / ((tb/100)**2);
-    const res = document.getElementById('hasilBMI');
-    res.style.display = "block";
-    
-    let txt = "", img = "", srn = "";
+        const bmi = bb / ((tb/100)**2);
+        const resContainer = document.getElementById('hasilBMI');
+        resContainer.style.display = "block";
+        
+        let txt = "", img = "", srn = "", bmiClass = "";
 
-    if(gen === 'wanita') {
-        if(bmi < 18.5) {
-            txt = "Kurus (Underweight)";
-            // Ikon Wanita Langsing
-            img = "https://cdn-icons-png.flaticon.com/512/6997/6997662.png"; 
-            srn = "Tubuhmu sangat ramping. Pastikan asupan nutrisi tercukupi agar tetap berenergi!";
-        } else if(bmi < 25) {
-            txt = "Ideal ✨";
-            // Ikon Wanita Proporsional
-            img = "https://cdn-icons-png.flaticon.com/512/6997/6997671.png"; 
-            srn = "Wah, bentuk tubuhmu sangat proporsional! Pertahankan pola hidup sehatmu.";
+        // Penentuan Kategori, Saran, dan Gambar Full-Body (Placeholders)
+        // Catatan: Tautan gambar di bawah adalah placeholder illustrative (full body).
+        
+        if(isWanita) {
+            // --- LOGIKA WANITA ---
+            if(bmi < 18.5) {
+                txt = "Kurus (Underweight)";
+                img = "https://svgshare.com/i/15A_.svg"; // Ilustrasi Full Body Wanita Kurus
+                srn = "Tubuhmu terlihat sangat ramping, Merpati. Pastikan asupan nutrisi dan kalori tercukupi agar tetap sehat dan berenergi!";
+                bmiClass = "underweight";
+            } else if(bmi < 25) {
+                txt = "Ideal ✨";
+                img = "https://svgshare.com/i/15Bt.svg"; // Ilustrasi Full Body Wanita Ideal
+                srn = "Wah, bentuk tubuhmu sangat proporsional! Pertahankan pola makan sehat dan rutin berolahraga ya.";
+                bmiClass = "ideal";
+            } else if(bmi < 30) {
+                txt = "Berisi (Overweight)";
+                img = "https://svgshare.com/i/15BX.svg"; // Ilustrasi Full Body Wanita Berisi
+                srn = "Tubuhmu terlihat berisi dan menggemaskan. Jaga pola makan dan tambahkan aktivitas fisik agar tetap bugar.";
+                bmiClass = "overweight";
+            } else {
+                txt = "Sangat Gemuk (Obesitas)";
+                img = "https://svgshare.com/i/15By.svg"; // Ilustrasi Full Body Wanita Obesitas
+                srn = "Kesehatanmu sangat berharga. Yuk, mulai konsultasi dengan ahli gizi dan atur pola hidup sehat demi jangka panjang.";
+                bmiClass = "obese";
+            }
         } else {
-            txt = "Berisi (Overweight)";
-            // Ikon Wanita Berisi (Mirip referensi gambar yang kamu unggah)
-            img = "https://cdn-icons-png.flaticon.com/512/6997/6997674.png"; 
-            srn = "Tubuhmu terlihat berisi dan menggemaskan. Jangan lupa olahraga ringan agar tetap bugar.";
+            // --- LOGIKA PRIA ---
+            if(bmi < 18.5) {
+                txt = "Kurus (Underweight)";
+                img = "https://svgshare.com/i/15Ca.svg"; // Ilustrasi Full Body Pria Kurus
+                srn = "Tubuhmu terlihat kurang berisi. Coba tambah porsi makan sehat dan latihan beban untuk membentuk massa otot.";
+                bmiClass = "underweight";
+            } else if(bmi < 25) {
+                txt = "Ideal ✨";
+                img = "https://svgshare.com/i/15Cd.svg"; // Ilustrasi Full Body Pria Ideal
+                srn = "Tubuhmu tegap dan ideal. Keren! Pertahankan gaya hidup aktifmu.";
+                bmiClass = "ideal";
+            } else if(bmi < 30) {
+                txt = "Berisi (Overweight)";
+                img = "https://svgshare.com/i/15Bw.svg"; // Ilustrasi Full Body Pria Berisi
+                srn = "Sudah mulai berisi nih. Yuk, mulai rutin olahraga cardio dan kurangi makanan berminyak.";
+                bmiClass = "overweight";
+            } else {
+                txt = "Sangat Gemuk (Obesitas)";
+                img = "https://svgshare.com/i/15Ce.svg"; // Ilustrasi Full Body Pria Obesitas
+                srn = "Kesehatanmu dalam risiko. Sangat disarankan untuk mengatur ulang pola makan dan rutin berolahraga.";
+                bmiClass = "obese";
+            }
         }
-    } else {
-        // Logika untuk Pria
-        if(bmi < 18.5) {
-            txt = "Kurus";
-            img = "https://cdn-icons-png.flaticon.com/512/4140/4140037.png";
-            srn = "Tubuhmu terlihat kurang berisi, coba tambah porsi makan dan protein.";
-        } else if(bmi < 25) {
-            txt = "Ideal";
-            img = "https://cdn-icons-png.flaticon.com/512/4140/4140048.png";
-            srn = "Tubuhmu tegap dan ideal. Keren!";
-        } else {
-            txt = "Berisi";
-            img = "https://cdn-icons-png.flaticon.com/512/4140/4140047.png";
-            srn = "Sudah mulai berisi, yuk mulai rutin jalan santai atau cardio.";
-        }
-    }
 
-    document.getElementById('status-teks').innerText = txt;
-    document.getElementById('img-visual').src = img;
-    document.getElementById('saran-teks').innerText = srn;
-};
+        // Tampilkan Hasil ke UI
+        document.getElementById('status-teks').innerText = txt;
+        document.getElementById('bmi-angka').innerText = "Skor BMI kamu: " + bmi.toFixed(1);
+        document.getElementById('img-visual').src = img;
+        document.getElementById('saran-teks').innerText = srn;
+    };
 
-    window.copyLink = () => { navigator.clipboard.writeText(document.getElementById('link-display').innerText).then(()=>alert("Tersalin!")); };
-    window.shareWA = () => { window.open("https://wa.me/?text=Kirim pesan rahasia: " + document.getElementById('link-display').innerText); };
-    window.shareIG = () => { window.copyLink(); alert("Link disalin! Buka IG Story."); window.location.href="instagram://story-camera"; };
+    // --- FUNGSI FITUR TAMBAHAN (SAMA SEPERTI SEBELUMNYA) ---
+    window.copyLink = () => { navigator.clipboard.writeText(document.getElementById('link-display').innerText).then(()=>alert("Link tersalin, Merpati!")); };
+    window.shareWA = () => { window.open("https://wa.me/?text=Hai! Kirim pesan rahasia ke aku yuk, anonim kok 🤫: " + document.getElementById('link-display').innerText); };
+    window.shareIG = () => { window.copyLink(); alert("Link disalin! Sekarang Merpati bisa tempel link-nya di IG Story ya."); window.location.href="instagram://story-camera"; };
     
     window.sendToFirebase = async () => {
         const t = document.getElementById('anon-text').value;
-        if(!t) return;
+        if(!t) return alert("Pesannya masih kosong, Merpati!");
+        if(!receiverID) return alert("Penerima tidak valid.");
         await addDoc(collection(db, "messages"), { receiverID, text: t, timestamp: serverTimestamp() });
-        alert("Terkirim!");
-        location.href = location.origin + location.pathname;
+        alert("Pesan rahasia terkirim! 🤫");
+        document.getElementById('anon-text').value = ''; // Bersihkan teks
     };
     
     window.cekJodoh = () => { 
+        const n1 = document.getElementById('nama1').value;
+        const n2 = document.getElementById('nama2').value;
+        if(!n1 || !n2) return alert("Isi kedua namanya dulu ya!");
         document.getElementById('hasilJodoh').innerText = Math.floor(Math.random()*40 + 60) + "% ❤️"; 
     };
 </script>
