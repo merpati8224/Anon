@@ -119,7 +119,6 @@
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // Ganti dengan KONFIGURASI FIREBASE ANDA yang sebenarnya
     const firebaseConfig = {
         apiKey: "AIzaSyBRUMOALHTCiJ83lBc1KaYc0QcsSIfw5ek",
         authDomain: "webanonymous-128cd.firebaseapp.com",
@@ -142,41 +141,30 @@
 
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
-        
-        // Sembunyikan semua halaman utama terlebih dahulu
         document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
 
         if (user) {
-            // Mode kirim pesan anonim ke orang lain
             if (receiverID && receiverID !== user.uid) { 
                 document.getElementById('page-send-msg').classList.add('active');
             } else { 
-                // Mode dashboard user sendiri
                 document.getElementById('main-content').classList.add('active'); 
                 document.getElementById('main-nav').style.display = 'flex';
                 setupUser(user);
             }
         } else {
-            // Belum login
             if (receiverID) {
-                // Bisa kirim pesan tanpa login
                 document.getElementById('page-send-msg').classList.add('active');
             } else {
-                // Tampilkan halaman login
                 document.getElementById('page-login').classList.add('active');
             }
         }
     });
 
-    // --- NAVIGASI SUB-PAGE ---
     window.showSubPage = (id) => {
-        // Hapus class active dari semua sub-page
         document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
-        // Tambahkan class active ke sub-page yang dipilih
         document.getElementById(id).classList.add('active');
     }
 
-    // --- FUNGSI UTAMA USER ---
     function setupUser(user) {
         const link = window.location.origin + window.location.pathname + "?to=" + user.uid;
         document.getElementById('link-display').innerText = link;
@@ -187,9 +175,8 @@
         });
     }
 
-    // --- LOGIKA BODY VISUALIZER (FULL BODY & KATEGORI BARU) ---
+    // --- LOGIKA BODY VISUALIZER (PERBAIKAN GAMBAR & UKURAN) ---
     window.hitungVisual = () => {
-        // Perbaikan pengambilan gender: Cek radio mana yang dipilih
         const isWanita = document.getElementById('genderWanita').checked;
         const bb = parseFloat(document.getElementById('berat').value);
         const tb = parseFloat(document.getElementById('tinggi').value);
@@ -200,67 +187,50 @@
         const resContainer = document.getElementById('hasilBMI');
         resContainer.style.display = "block";
         
-        let txt = "", img = "", srn = "", bmiClass = "";
+        let txt = "", img = "", srn = "", ukuran = "";
 
-        // Penentuan Kategori, Saran, dan Gambar Full-Body (Placeholders)
-        // Catatan: Tautan gambar di bawah adalah placeholder illustrative (full body).
-        
+        // Estimasi Ukuran Badan Sederhana
+        const estimasiPinggang = isWanita ? (tb * 0.42).toFixed(0) : (tb * 0.45).toFixed(0);
+        const estimasiPinggul = isWanita ? (tb * 0.55).toFixed(0) : (tb * 0.52).toFixed(0);
+
         if(isWanita) {
-            // --- LOGIKA WANITA ---
+            // Logika Gambar Wanita
             if(bmi < 18.5) {
                 txt = "Kurus (Underweight)";
-                img = "https://svgshare.com/i/15A_.svg"; // Ilustrasi Full Body Wanita Kurus
-                srn = "Tubuhmu terlihat sangat ramping, Merpati. Pastikan asupan nutrisi dan kalori tercukupi agar tetap sehat dan berenergi!";
-                bmiClass = "underweight";
+                img = "https://cdn-icons-png.flaticon.com/512/6997/6997666.png"; 
+                srn = "Tubuhmu ramping sekali, Merpati. Jangan lupa makan nutrisi yang cukup ya!";
             } else if(bmi < 25) {
                 txt = "Ideal ✨";
-                img = "https://svgshare.com/i/15Bt.svg"; // Ilustrasi Full Body Wanita Ideal
-                srn = "Wah, bentuk tubuhmu sangat proporsional! Pertahankan pola makan sehat dan rutin berolahraga ya.";
-                bmiClass = "ideal";
-            } else if(bmi < 30) {
-                txt = "Berisi (Overweight)";
-                img = "https://svgshare.com/i/15BX.svg"; // Ilustrasi Full Body Wanita Berisi
-                srn = "Tubuhmu terlihat berisi dan menggemaskan. Jaga pola makan dan tambahkan aktivitas fisik agar tetap bugar.";
-                bmiClass = "overweight";
+                img = "https://cdn-icons-png.flaticon.com/512/6997/6997671.png";
+                srn = "Wah, bentuk tubuhmu sangat proporsional! Pertahankan gaya hidup sehatmu.";
             } else {
-                txt = "Sangat Gemuk (Obesitas)";
-                img = "https://svgshare.com/i/15By.svg"; // Ilustrasi Full Body Wanita Obesitas
-                srn = "Kesehatanmu sangat berharga. Yuk, mulai konsultasi dengan ahli gizi dan atur pola hidup sehat demi jangka panjang.";
-                bmiClass = "obese";
+                txt = "Berisi / Obesitas";
+                img = "https://cdn-icons-png.flaticon.com/512/6998/6998065.png";
+                srn = "Tubuhmu terlihat berisi. Yuk, mulai rutin olahraga dan jaga pola makan!";
             }
+            ukuran = `Estimasi Lingkar: Pinggang ±${estimasiPinggang}cm, Pinggul ±${estimasiPinggul}cm`;
         } else {
-            // --- LOGIKA PRIA ---
+            // Logika Gambar Pria
             if(bmi < 18.5) {
                 txt = "Kurus (Underweight)";
-                img = "https://svgshare.com/i/15Ca.svg"; // Ilustrasi Full Body Pria Kurus
-                srn = "Tubuhmu terlihat kurang berisi. Coba tambah porsi makan sehat dan latihan beban untuk membentuk massa otot.";
-                bmiClass = "underweight";
+                img = "https://cdn-icons-png.flaticon.com/512/4202/4202831.png";
             } else if(bmi < 25) {
                 txt = "Ideal ✨";
-                img = "https://svgshare.com/i/15Cd.svg"; // Ilustrasi Full Body Pria Ideal
-                srn = "Tubuhmu tegap dan ideal. Keren! Pertahankan gaya hidup aktifmu.";
-                bmiClass = "ideal";
-            } else if(bmi < 30) {
-                txt = "Berisi (Overweight)";
-                img = "https://svgshare.com/i/15Bw.svg"; // Ilustrasi Full Body Pria Berisi
-                srn = "Sudah mulai berisi nih. Yuk, mulai rutin olahraga cardio dan kurangi makanan berminyak.";
-                bmiClass = "overweight";
+                img = "https://cdn-icons-png.flaticon.com/512/4202/4202843.png";
             } else {
-                txt = "Sangat Gemuk (Obesitas)";
-                img = "https://svgshare.com/i/15Ce.svg"; // Ilustrasi Full Body Pria Obesitas
-                srn = "Kesehatanmu dalam risiko. Sangat disarankan untuk mengatur ulang pola makan dan rutin berolahraga.";
-                bmiClass = "obese";
+                txt = "Berisi / Obesitas";
+                img = "https://cdn-icons-png.flaticon.com/512/4202/4202835.png";
             }
+            srn = "Kesehatan itu penting, Merpati. Semangat untuk tetap aktif setiap hari!";
+            ukuran = `Estimasi Lingkar: Pinggang ±${estimasiPinggang}cm, Dada ±${estimasiPinggul}cm`;
         }
 
-        // Tampilkan Hasil ke UI
         document.getElementById('status-teks').innerText = txt;
-        document.getElementById('bmi-angka').innerText = "Skor BMI kamu: " + bmi.toFixed(1);
+        document.getElementById('bmi-angka').innerHTML = `Skor BMI: ${bmi.toFixed(1)}<br><small style="color:#ff85a2">${ukuran}</small>`;
         document.getElementById('img-visual').src = img;
         document.getElementById('saran-teks').innerText = srn;
     };
 
-    // --- FUNGSI FITUR TAMBAHAN (SAMA SEPERTI SEBELUMNYA) ---
     window.copyLink = () => { navigator.clipboard.writeText(document.getElementById('link-display').innerText).then(()=>alert("Link tersalin, Merpati!")); };
     window.shareWA = () => { window.open("https://wa.me/?text=Hai! Kirim pesan rahasia ke aku yuk, anonim kok 🤫: " + document.getElementById('link-display').innerText); };
     window.shareIG = () => { window.copyLink(); alert("Link disalin! Sekarang Merpati bisa tempel link-nya di IG Story ya."); window.location.href="instagram://story-camera"; };
@@ -271,7 +241,7 @@
         if(!receiverID) return alert("Penerima tidak valid.");
         await addDoc(collection(db, "messages"), { receiverID, text: t, timestamp: serverTimestamp() });
         alert("Pesan rahasia terkirim! 🤫");
-        document.getElementById('anon-text').value = ''; // Bersihkan teks
+        document.getElementById('anon-text').value = ''; 
     };
     
     window.cekJodoh = () => { 
