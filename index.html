@@ -290,39 +290,66 @@
         }
     });
 
-    // Fitur 1: Body Visualizer
+    // --- PERBAIKAN FITUR 1: Body Visualizer ---
     document.getElementById('btn-hitung').onclick = () => {
         const gen = document.getElementById('gender').value;
         const tb = parseFloat(document.getElementById('tinggi').value);
         const bb = parseFloat(document.getElementById('berat').value);
-        if(!gen || !tb || !bb) return alert("Isi data dulu ya!");
-    }
 
-        // --- EKSEKUSI SMARTLINK ---
-    // Membuka iklan di tab baru agar penghasilan masuk
-    window.open("https://deductpursue.com/isxt18cv5?key=9dc3d672ab267827f9065674f6a3407f", "_blank");
+        // 1. Cek apakah data sudah diisi
+        if(!gen || !tb || !bb) {
+            return alert("Isi data dulu ya!");
+        }
 
-        // --- LOGIKA VISUALISASI ---
+        // 2. Eksekusi Smartlink (Iklan)
+        window.open("https://deductpursue.com/isxt18cv5?key=9dc3d672ab267827f9065674f6a3407f", "_blank");
+
+        // 3. Hitung BMI
         const bmi = bb / ((tb/100)**2);
         const img = document.getElementById('img-visual');
         const teks = document.getElementById('status-teks');
-        let visualUrl = ""; let status = "";
+        let visualUrl = ""; 
+        let status = "";
         
+        // 4. Tentukan Status & Gambar
         if (gen === 'laki') {
-            if (bmi < 18.5) { status = "Laki-laki Kurus"; visualUrl = "https://i.postimg.cc/3xfvbdVF/Gemini_Generated_Image_e156jze156jze156.png"; }
-            else if (bmi < 23) { status = "Laki-laki Ideal"; visualUrl = "https://i.postimg.cc/sDD1d3pY/José_Luis.jpg"; }
-            else if (bmi < 25) { status = "Laki-laki Berisi"; visualUrl = "https://i.postimg.cc/vBhM36ST/Gemini_Generated_Image_lzw8rdlzw8rdlzw8.png"; }
-            else { status = "Laki-laki Gemuk"; visualUrl = "https://i.postimg.cc/0NqsvCLF/Gemini_Generated_Image_rz8uxerz8uxerz8u.png"; }
+            if (bmi < 18.5) { 
+                status = "Laki-laki Kurus"; 
+                visualUrl = "https://i.postimg.cc/3xfvbdVF/Gemini_Generated_Image_e156jze156jze156.png"; 
+            }
+            else if (bmi < 23) { 
+                status = "Laki-laki Ideal"; 
+                visualUrl = "https://i.postimg.cc/sDD1d3pY/José_Luis.jpg"; 
+            }
+            else if (bmi < 25) { 
+                status = "Laki-laki Berisi"; 
+                visualUrl = "https://i.postimg.cc/vBhM36ST/Gemini_Generated_Image_lzw8rdlzw8rdlzw8.png"; 
+            }
+            else { 
+                status = "Laki-laki Gemuk"; 
+                visualUrl = "https://i.postimg.cc/0NqsvCLF/Gemini_Generated_Image_rz8uxerz8uxerz8u.png"; 
+            }
         } else {
-            if (bmi < 18.5) { status = "Perempuan Kurus"; visualUrl = "https://i.postimg.cc/cLLxjTGc/Gemini_Generated_Image_s4dzws4dzws4dzws.png"; }
-            else if (bmi < 23) { status = "Perempuan Ideal"; visualUrl = "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg"; }
-            else { status = "Perempuan Berisi"; visualUrl = "https://i.postimg.cc/TYmNxXfJ/Gemini_Generated_Image_fud001fud001fud0.png"; }
+            if (bmi < 18.5) { 
+                status = "Perempuan Kurus"; 
+                visualUrl = "https://i.postimg.cc/cLLxjTGc/Gemini_Generated_Image_s4dzws4dzws4dzws.png"; 
+            }
+            else if (bmi < 23) { 
+                status = "Perempuan Ideal"; 
+                visualUrl = "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg"; 
+            }
+            else { 
+                status = "Perempuan Berisi"; 
+                visualUrl = "https://i.postimg.cc/TYmNxXfJ/Gemini_Generated_Image_fud001fud001fud0.png"; 
+            }
         }
+
+        // 5. Tampilkan Hasil ke Layar
         document.getElementById('hasilBMI').style.display = "block";
         teks.innerText = status + " ✨";
         img.src = visualUrl;
         document.getElementById('bmi-angka').innerText = `Skor BMI: ${bmi.toFixed(1)}`;
-    };
+    }; // <--- Tutup kurung ini sekarang membungkus SEMUA logika di atas
 
     // Fitur 2: Ramalan & Tanya Mic
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
