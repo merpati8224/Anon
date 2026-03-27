@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastel Paradise - Premium Divination & Wellness</title>
-    
+    <title>Pastel Paradise - Premium Wellness & Fun</title>
     <meta name="monetag" content="a3428fbcb998374cd98cf44caa5cfc07">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="https://deductpursue.com/34/83/cc/3483cc01879a0b87f5698fca3d8b6067.js"></script>
+    <script src="https://deductpursue.com/b5/06/21/b5062164c8e2ce615f79e8b920276e0b.js"></script>
 
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
             --bg-color: #ffffff;
-            --pastel-pink: #ffebee;
-            --accent-pink: #f8bbd0;
-            --deep-pink: #f48fb1;
-            --text-color: #5d4037;
-            --shadow: 0 8px 30px rgba(244, 143, 177, 0.2);
+            --main-pink: #ffdae9; /* Premium Pastel Pink */
+            --dark-pink: #f8bbd0;
+            --accent-pink: #ff80ab;
+            --text-color: #4a4a4a;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(255, 182, 193, 0.3);
             --transition: all 0.3s ease;
         }
 
@@ -32,852 +35,953 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
             color: var(--text-color);
-            min-height: 100vh;
             overflow-x: hidden;
+            background-image: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%);
         }
 
-        /* --- GLOBAL PREMIUM COMPONENTS --- */
-        .btn-premium {
-            background: linear-gradient(45deg, var(--accent-pink), var(--deep-pink));
+        /* --- PRELOADER (Optional, for premium feel) --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .heart-loader {
+            font-size: 50px;
+            color: var(--accent-pink);
+            animation: beat 1s infinite;
+        }
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* --- UTILITIES --- */
+        .hidden { display: none !important; }
+        .premium-btn {
+            background: linear-gradient(45deg, var(--main-pink), var(--accent-pink));
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 50px;
+            border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(244, 143, 177, 0.4);
             transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(255, 128, 171, 0.4);
+            font-size: 1em;
         }
-
-        .btn-premium:hover {
-            box-shadow: 0 6px 20px rgba(244, 143, 177, 0.6);
-            transform: translateY(-2px);
+        .premium-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 128, 171, 0.6);
         }
-
-        .premium-input {
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--accent-pink);
+        }
+        .input-group input {
             width: 100%;
             padding: 15px;
-            border: 2px solid var(--pastel-pink);
+            border: 2px solid var(--main-pink);
             border-radius: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--text-color);
-            font-size: 16px;
+            font-size: 1em;
             transition: var(--transition);
-            margin-bottom: 15px;
         }
-
-        .premium-input:focus {
+        .input-group input:focus {
             outline: none;
-            border-color: var(--deep-pink);
-            background: #fff;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 10px rgba(255, 128, 171, 0.2);
         }
 
-        /* --- HEADER & NAVIGATION --- */
+        /* --- HEADER & NAVIGATION (5 Features) --- */
         header {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px 0;
-            position: sticky;
+            background-color: var(--white);
+            padding: 20px 50px;
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--pastel-pink);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
         }
 
-        .nav-links {
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-pink);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
             display: flex;
             gap: 15px;
-            list-style: none;
-            background: var(--pastel-pink);
-            padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .nav-links li a {
+        nav ul li a {
             text-decoration: none;
             color: var(--text-color);
             font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 50px;
+            font-size: 0.95rem;
+            padding: 10px 18px;
+            border-radius: 25px;
             transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 15px;
         }
 
-        .nav-links li a:hover, .nav-links li a.active {
-            background-color: white;
-            color: var(--deep-pink);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        nav ul li a i {
+            font-size: 1.1em;
+            color: var(--accent-pink);
         }
 
-        /* --- MAIN CONTENT & SECTIONS --- */
+        nav ul li a:hover, nav ul li a.active {
+            background-color: var(--main-pink);
+            color: var(--white);
+        }
+        nav ul li a:hover i, nav ul li a.active i {
+            color: var(--white);
+        }
+
+        /* --- MAIN CONTENT --- */
         main {
+            margin-top: 120px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 80vh;
+        }
+
+        .feature-container {
+            background-color: var(--white);
+            width: 90%;
             max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            padding-bottom: 100px;
-        }
-
-        .content-section {
-            display: none; /* Hidden by default */
-            background: white;
-            padding: 40px;
             border-radius: 30px;
+            padding: 40px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--pastel-pink);
             text-align: center;
-            animation: fadeIn 0.5s ease;
+            border: 4px solid var(--main-pink);
         }
 
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            color: var(--deep-pink);
+        .feature-header h1 {
+            color: var(--accent-pink);
             margin-bottom: 10px;
-            font-weight: 700;
-            font-size: 28px;
+            font-size: 2.2em;
         }
-
-        .section-subtitle {
+        .feature-header p {
             color: #888;
             margin-bottom: 30px;
-            font-size: 16px;
         }
 
-        /* --- FORM GRID --- */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        /* --- FEATURE: TIMBANGAN (BMI) --- */
+        .gender-select-display {
+            background: var(--main-pink);
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
             margin-bottom: 20px;
-        }
-        
-        @media (max-width: 600px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .nav-links { flex-wrap: wrap; justify-content: center; border-radius: 20px; }
-            .content-section { padding: 20px; }
-        }
-
-        /* --- POPUP / MODAL STYLE (Premium) --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            color: var(--white);
+            font-weight: 600;
         }
 
-        .modal-overlay.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            position: relative;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            text-align: center;
-            border: 3px solid var(--pastel-pink);
-        }
-
-        .modal-overlay.show .modal-content {
-            transform: scale(1);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #aaa;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: var(--deep-pink);
-        }
-
-        /* Gender Selection Premium Style */
-        .gender-options {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .gender-btn {
-            background: var(--pastel-pink);
-            border: 2px solid transparent;
-            padding: 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 120px;
-            text-align: center;
-        }
-
-        .gender-btn:hover {
-            background: var(--accent-pink);
-            transform: scale(1.05);
-        }
-
-        .gender-btn.selected {
-            border-color: var(--deep-pink);
-            background: white;
-            box-shadow: var(--shadow);
-        }
-
-        .gender-btn i {
-            font-size: 40px;
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        .gender-btn.male i { color: #81d4fa; }
-        .gender-btn.female i { color: var(--deep-pink); }
-        .gender-btn span { font-weight: 600; color: var(--text-color); }
-
-        /* --- FEATURE SPECIFIC STYLES --- */
-
-        /* 1. Timbangan (BMI) */
         #bmi-result-area {
             margin-top: 30px;
-            display: none;
-            border-top: 2px dashed var(--pastel-pink);
-            padding-top: 30px;
-        }
-
-        .bmi-info {
-            font-size: 18px;
-            margin-bottom: 20px;
-            background: var(--pastel-pink);
-            padding: 15px;
-            border-radius: 15px;
-            display: inline-block;
-        }
-
-        .bmi-category {
-            font-weight: 700;
-            color: var(--deep-pink);
-            font-size: 22px;
-        }
-
-        .visual-container {
-            width: 100%;
-            max-width: 400px; /* Limit max width for quality */
-            margin: 20px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 5px solid white;
-            aspect-ratio: 2/3; /* Keep aspect ratio of source images */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f9f9f9;
-        }
-
-        .visual-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Important: covers area without stretching */
-            display: block;
-        }
-
-        /* 2. Ramalan */
-        .forecast-options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .opt-btn {
-            background: white;
-            border: 2px solid var(--pastel-pink);
-            padding: 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-color);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .opt-btn:hover {
-            background: var(--pastel-pink);
-            border-color: var(--accent-pink);
-        }
-        
-        .opt-btn i { color: var(--deep-pink); font-size: 20px; }
-
-        #forecast-text {
-            margin-top: 25px;
             padding: 20px;
-            background: #fff;
-            border-radius: 15px;
-            border-left: 5px solid var(--deep-pink);
-            font-style: italic;
-            display: none;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            background-color: #fff0f5;
+            border: 2px dashed var(--accent-pink);
         }
 
-        /* 3. Kecocokan & Kapan Nikah */
-        .heart-score {
-            font-size: 40px;
-            color: var(--deep-pink);
-            margin: 20px 0;
+        #bmi-status-text {
+            font-size: 1.5em;
             font-weight: 700;
+            margin: 10px 0;
+        }
+
+        #bmi-visual-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bmi-visual-img {
+            max-width: 100%; /* Agar tidak melebihi container */
+            max-height: 400px; /* Batasi tinggi agar tidak memenuhi layar */
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            object-fit: contain; /* Jaga proporsi gambar */
+            display: block; /* Pastikan terlihat full */
+        }
+
+        /* Colors for BMI statuses */
+        .status-kurus { color: #81d4fa; }
+        .status-ideal { color: #81c784; }
+        .status-gemuk { color: #ffb74d; }
+        .status-obesitas { color: #e57373; }
+
+        /* --- FEATURE: RAMALAN --- */
+        #forecast-type-display {
+            background: var(--white);
+            border: 2px solid var(--main-pink);
+            color: var(--accent-pink);
+        }
+
+        #forecast-result-area {
+            margin-top: 30px;
+            text-align: left;
+            padding: 25px;
+            background: #fff9fb;
+            border-radius: 20px;
+            border-left: 5px solid var(--accent-pink);
+        }
+        #forecast-result-area h3 {
+            color: var(--accent-pink);
+            margin-bottom: 10px;
+        }
+
+        /* --- FEATURE: KECOCOKAN --- */
+        .love-percent {
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--accent-pink);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            margin: 20px 0;
         }
-        
-        .compatibility-text { font-size: 18px; margin-bottom: 20px; }
+        .love-percent i {
+            animation: beat 0.8s infinite;
+        }
 
-        .wedding-section {
+        .marriage-calc {
             margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px dashed var(--pastel-pink);
+            padding-top: 20px;
+            border-top: 2px solid var(--main-pink);
         }
 
-        #wedding-result {
-            font-size: 20px;
-            margin-top: 20px;
+        #marriage-result {
+            font-size: 1.3em;
             font-weight: 600;
-            color: #6a1b9a; /* Purple pastel for variety */
-            display: none;
+            color: var(--text-color);
+            margin-top: 20px;
+            background: #fff0f5;
+            padding: 15px;
+            border-radius: 10px;
         }
 
-        /* 4. Bertanya Merpati (SpongeBob Shell Style) */
-        .pigeon-container {
-            position: relative;
-            margin: 30px auto;
-            width: 150px;
-            height: 150px;
+        /* --- FEATURE: BERTANYA MERPATI --- */
+        .mic-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        #mic-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--main-pink), var(--accent-pink));
+            border: none;
+            color: white;
+            font-size: 40px;
             cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 128, 171, 0.5);
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
-        .shell-icon {
-            font-size: 100px;
-            color: #b3e5fc; /* Light blue like the shell */
-            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        #mic-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #mic-btn.recording {
+            animation: pulse-mic 1.5s infinite;
+            background: linear-gradient(135deg, #ff80ab, #ff4081);
+        }
+
+        @keyframes pulse-mic {
+            0% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 64, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
+        }
+
+        .instruction-text {
+            font-style: italic;
+            color: #888;
+            background: #fff0f5;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        #pigeon-answer-area {
+            margin-top: 30px;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--accent-pink);
+            background: #fff9fb;
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        /* Thinking dots animation */
+        .dots {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--accent-pink);
+            margin: 0 4px;
+            animation: dots 1.4s infinite both;
+        }
+        .dots:nth-child(2) { animation-delay: 0.2s; }
+        .dots:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dots {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* --- PREMIUM POPUP / MODAL (for Gender & Forecast) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
             transition: var(--transition);
         }
 
-        .pigeon-container:hover .shell-icon {
-            transform: scale(1.1) rotate(-10deg);
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .pigeon-container:active .shell-icon {
-            transform: scale(0.95);
+        .premium-modal {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            transform: translateY(20px);
+            transition: var(--transition);
+            border: 4px solid var(--main-pink);
+            position: relative;
         }
-        
-        .mic-instruction {
-            margin-top: 10px;
+
+        .modal-overlay.active .premium-modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #aaa;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-close:hover { color: var(--accent-pink); }
+
+        .modal-title {
+            color: var(--accent-pink);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .option-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-item {
+            background: #fff5f8;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid transparent;
             font-weight: 600;
-            color: var(--deep-pink);
-            font-size: 14px;
         }
 
-        .pigeon-instruction {
-            font-size: 14px;
-            color: #888;
-            margin-top: 10px;
-            font-style: italic;
+        .option-item i {
+            font-size: 1.5em;
+            color: var(--accent-pink);
         }
 
-        #pigeon-answer {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-color);
-            min-height: 35px;
+        .option-item:hover {
+            border-color: var(--accent-pink);
+            background: var(--main-pink);
+            color: white;
         }
-        
-        .loading-dots:after {
-          content: ' .';
-          animation: dots 1s steps(5, end) infinite;}
+        .option-item:hover i {
+            color: white;
+        }
 
-        @keyframes dots {
-          0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);}
-          40% { color: var(--text-color); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);}
-          60% { text-shadow: .25em 0 0 var(--text-color), .5em 0 0 rgba(0,0,0,0);}
-          80%, 100% { text-shadow: .25em 0 0 var(--text-color), .5em 0 0 var(--text-color);}}
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: auto;
+        }
 
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 10px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 5px; }
+            nav ul li a { padding: 8px 12px; font-size: 0.8rem; }
+            main { margin-top: 180px; }
+            .feature-container { padding: 25px; width: 95%; }
+            .feature-header h1 { font-size: 1.8em; }
+            .bmi-visual-img { max-height: 300px; }
+        }
     </style>
 </head>
 <body>
 
-    <script src="https://deductpursue.com/34/83/cc/3483cc01879a0b87f5698fca3d8b6067.js"></script>
-    <script src="https://deductpursue.com/b5/06/21/b5062164c8e2ce615f79e8b920276e0b.js"></script>
+    <div id="preloader">
+        <div class="heart-loader"><i class="fas fa-heart"></i></div>
+    </div>
+
+    <audio id="pigeon-sound" src="https://assets.mixkit.co/active_storage/sfx/2004/2004-preview.mp3" preload="auto"></audio>
 
     <header>
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="#" class="active" onclick="showSection('timbangan', this)"><i class="fas fa-weight"></i> Timbangan</a></li>
-                <li><a href="#" onclick="showSection('ramalan', this)"><i class="fas fa-crystal-ball"></i> Ramalan</a></li>
-                <li><a href="#" onclick="showSection('kecocokan', this)"><i class="fas fa-heartbeat"></i> Kecocokan</a></li>
-                <li><a href="#" onclick="showSection('merpati', this)"><i class="fas fa-dove"></i> Bertanya Merpati</a></li>
+        <a href="#" class="logo">PastelParadise</a>
+        <nav>
+            <ul id="main-nav">
+                <li><a href="#" class="active" data-feature="timbangan"><i class="fas fa-weight"></i> Timbangan</a></li>
+                <li><a href="#" data-feature="ramalan"><i class="fas fa-crystal-ball"></i> Ramalan</a></li>
+                <li><a href="#" data-feature="kecocokan"><i class="fas fa-heartbeat"></i> Kecocokan</a></li>
+                <li><a href="#" data-feature="merpati"><i class="fas fa-dove"></i> Bertanya Merpati</a></li>
+                <li><a href="#" data-feature="about"><i class="fas fa-info-circle"></i> Info</a></li>
             </ul>
-        </div>
+        </nav>
     </header>
 
     <main>
-        <section id="timbangan" class="content-section active">
-            <h2>Kalkulator Kesehatan Premium</h2>
-            <p class="section-subtitle">Cek berat badan idealmu dengan visualisasi cantik.</p>
-            
-            <div class="form-grid">
-                <input type="number" id="bmi-height" class="premium-input" placeholder="Tinggi Badan (cm)" required>
-                <input type="number" id="bmi-weight" class="premium-input" placeholder="Berat Badan (kg)" required>
+        
+        <section id="feat-timbangan" class="feature-container">
+            <div class="feature-header">
+                <h1>Kalkulator Berat Badan Premium</h1>
+                <p>Isi data dirimu untuk melihat visualisasi tubuh dan status BMI-mu.</p>
             </div>
-            
-            <button class="btn-premium" onclick="openGenderModal()">Pilih Gender & Lihat Hasil</button>
 
-            <div id="bmi-result-area">
-                <div class="bmi-info">
-                    BMI Anda: <span id="bmi-value">--</span> (<span id="bmi-status" class="bmi-category">--</span>)
+            <div class="input-group">
+                <label>Jenis Kelamin</label>
+                <div class="gender-select-display" id="gender-display" onclick="openModal('gender-modal')">
+                    <span id="selected-gender-text">Pilih Gender Premium...</span>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="visual-container">
-                    <img id="bmi-visual" src="" alt="Visualisasi Berat Badan">
+            </div>
+
+            <div class="input-group">
+                <label for="height">Tinggi Badan (cm)</label>
+                <input type="number" id="height" placeholder="Contoh: 165">
+            </div>
+
+            <div class="input-group">
+                <label for="weight">Berat Badan (kg)</label>
+                <input type="number" id="weight" placeholder="Contoh: 55">
+            </div>
+
+            <button class="premium-btn" onclick="calculateBMIandShowAd()">Lihat Visual Tubuh & Hasil</button>
+
+            <div id="bmi-result-area" class="hidden">
+                <h3>Hasil Perhitunganmu:</h3>
+                <p>BMI Kamu: <strong id="bmi-value">22.5</strong></p>
+                <p>Status: <span id="bmi-status-text">Ideal</span></p>
+                
+                <div id="bmi-visual-container">
+                    <img src="" alt="Visual Tubuh" id="bmi-visual-img" class="bmi-visual-img">
                 </div>
-                <p style="color: #888; font-size: 14px; margin-top: 10px;">Kembali ke atas untuk menghitung ulang.</p>
             </div>
         </section>
 
-        <section id="ramalan" class="content-section">
-            <h2>Ramalan Nasib Premium</h2>
-            <p class="section-subtitle">Pilih topik yang ingin kamu ketahui hari ini.</p>
-            
-            <button class="btn-premium" onclick="openForecastModal()">Pilih Topik Ramalan</button>
-            
-            <div id="forecast-text"></div>
+        <section id="feat-ramalan" class="feature-container hidden">
+            <div class="feature-header">
+                <h1>Ramalan Nasib Cantik</h1>
+                <p>Pilih topik ramalan dan lihat apa kata bintang-bintang untukmu hari ini.</p>
+            </div>
+
+            <div class="input-group">
+                <label>Pilih Jenis Ramalan</label>
+                <div class="gender-select-display" id="forecast-type-display" onclick="openModal('forecast-modal')">
+                    <span id="selected-forecast-text">Pilih Topik Ramalan...</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+
+            <div id="forecast-result-area" class="hidden">
+                <h3 id="forecast-title">Ramalan Asmara</h3>
+                <p id="forecast-text">...</p>
+            </div>
         </section>
 
-        <section id="kecocokan" class="content-section">
-            <h2>Cek Kecocokan Asmara</h2>
-            <p class="section-subtitle">Masukkan nama kalian dan lihat seberapa cocok detak jantung kalian.</p>
-            
-            <div class="form-grid">
-                <input type="text" id="name-user" class="premium-input" placeholder="Nama Kamu" required>
-                <input type="text" id="name-partner" class="premium-input" placeholder="Nama Pasangan" required>
+        <section id="feat-kecocokan" class="feature-container hidden">
+            <div class="feature-header">
+                <h1>Cek Kecocokan & Kapan Nikah</h1>
+                <p>Masukkan nama kamu dan pasanganmu yang tercinta.</p>
             </div>
-            
-            <button class="btn-premium" onclick="calculateCompatibility()">Hitung Kecocokan</button>
 
-            <div id="compatibility-result" style="display:none; margin-top:30px;">
-                <div class="heart-score">
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Nama Kamu</label>
+                    <input type="text" id="name1" placeholder="Nama Lengkap">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Nama Pasangan</label>
+                    <input type="text" id="name2" placeholder="Nama Lengkap">
+                </div>
+            </div>
+
+            <button class="premium-btn" onclick="calculateLove()">Cek Persentase Cinta</button>
+
+            <div id="love-result-area" class="hidden">
+                <div class="love-percent">
                     <i class="fas fa-heart"></i>
-                    <span id="compatibility-percent">0</span>%
+                    <span id="love-score">0%</span>
                     <i class="fas fa-heart"></i>
                 </div>
-                <p id="compatibility-desc" class="compatibility-text"></p>
+                <p id="love-summary">...</p>
             </div>
 
-            <div class="wedding-section">
-                h3 style="color: var(--text-color);">Kapan Kamu Nikah?</h3>
-                <p class="section-subtitle">Berdasarkan kalkulasi tanggal lahir & nama (Random Fun).</p>
-                <input type="date" id="birthdate" class="premium-input" style="max-width: 300px; margin: 0 auto 15px auto; display: block;">
-                <button class="btn-premium" onclick="calculateWeddingDate()">Melihat Kapan Nikah</button>
-                <div id="wedding-result"></div>
+            <div class="marriage-calc">
+                <h3>Tanya Kapan Kamu Nikah?</h3>
+                <div class="input-group">
+                    <label>Tanggal Lahir Kamu</label>
+                    <input type="date" id="birthdate">
+                </div>
+                <button class="premium-btn" onclick="calculateMarriageAndShowAd()">Cek Tanggal Nikah</button>
+                <div id="marriage-result" class="hidden">...</div>
             </div>
         </section>
 
-        <section id="merpati" class="content-section">
-            <h2>Bertanya Merpati Ajaib</h2>
-            <p class="section-subtitle">Tanyakan pertanyaan 'Ya' atau 'Tidak'. Merpati Keong akan menjawab.</p>
-            
-            <p class="mic-instruction">Bertanya dengan awalan: "Apakah........?"</p>
-
-            <div class="pigeon-container" onclick="askPigeon()">
-                <i class="fas fa-file-contract shell-icon"></i> 
+        <section id="feat-merpati" class="feature-container hidden">
+            <div class="feature-header">
+                <h1>Bertanya Ke Merpati Ajaib</h1>
+                <p>Tanyakan pertanyaan Ya/Tidak. Biarkan Merpati menjawabnya dengan ajaib (seperti Keong Spongebob).</p>
             </div>
-            
-            <p class="pigeon-instruction">Klik Keong/Merpati untuk mendengar jawaban</p>
-            
-            <div id="pigeon-answer"></div>
+
+            <div class="mic-section">
+                <p class="instruction-text">Bertanya dengan awalan: Apakah........?</p>
+                <button id="mic-btn" onclick="askPigeon()"><i class="fas fa-microphone"></i></button>
+                <p id="mic-status">Tekan mic untuk bertanya...</p>
+            </div>
+
+            <div id="pigeon-answer-area" class="hidden">
+                </div>
         </section>
+
+        <section id="feat-about" class="feature-container hidden">
+            <div class="feature-header">
+                <h1>Tentang PastelParadise</h1>
+                <p>Website hiburan premium yang cantik dan lucu.</p>
+            </div>
+            <p>Dibuat dengan cinta untuk memberikan hiburan ringan dan visual yang memanjakan mata.</p>
+        </section>
+
     </main>
 
-    <div id="gender-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('gender-modal')">&times;</span>
-            <h3 style="color: var(--deep-pink); margin-bottom: 15px;">Pilih Gender Anda</h3>
-            <p style="font-size: 14px; color: #888;">Untuk visualisasi yang akurat</p>
-            
-            <div class="gender-options">
-                <div class="gender-btn male" onclick="selectGender('pria')">
+    <footer>
+        <p>&copy; 2023 PastelParadise Premium. All rights reserved.</p>
+    </footer>
+
+    <div class="modal-overlay" id="gender-modal">
+        <div class="premium-modal">
+            <button class="modal-close" onclick="closeModal('gender-modal')"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Pilih Gender Premium</h2>
+            <ul class="option-list">
+                <li class="option-item" onclick="selectGender('Pria')">
                     <i class="fas fa-mars"></i>
                     <span>Pria</span>
-                </div>
-                <div class="gender-btn female" onclick="selectGender('wanita')">
+                </li>
+                <li class="option-item" onclick="selectGender('Wanita')">
                     <i class="fas fa-venus"></i>
                     <span>Wanita</span>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 
-    <div id="forecast-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('forecast-modal')">&times;</span>
-            <h3 style="color: var(--deep-pink); margin-bottom: 20px;">Pilih Tema Ramalan</h3>
-            
-            <div class="forecast-options-container">
-                <button class="opt-btn" onclick="getForecast('Asmara')"><i class="fas fa-heart"></i> Ramalan Asmara</button>
-                <button class="opt-btn" onclick="getForecast('Keuangan')"><i class="fas fa-coins"></i> Ramalan Keuangan</button>
-                <button class="opt-btn" onclick="getForecast('Karir')"><i class="fas fa-briefcase"></i> Ramalan Karir</button>
-            </div>
+    <div class="modal-overlay" id="forecast-modal">
+        <div class="premium-modal">
+            <button class="modal-close" onclick="closeModal('forecast-modal')"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Pilih Topik Ramalan</h2>
+            <ul class="option-list">
+                <li class="option-item" onclick="selectForecast('Asmara')">
+                    <i class="fas fa-heart"></i>
+                    <span>Ramalan Asmara</span>
+                </li>
+                <li class="option-item" onclick="selectForecast('Keuangan')">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Ramalan Keuangan</span>
+                </li>
+                <li class="option-item" onclick="selectForecast('Karir')">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Ramalan Karir</span>
+                </li>
+            </ul>
         </div>
     </div>
 
     <script>
-        /* --- CORE NAV FUNCTION --- */
-        function showSection(sectionId, navElement) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            // Deactivate all nav links
-            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            // Activate clicked nav link
-            navElement.classList.add('active');
-
-            // Reset results when changing tabs if needed
-            if(sectionId !== 'timbangan') {
-                // document.getElementById('bmi-result-area').style.display = 'none';
-            }
-        }
-
-        /* --- MODAL FUNCTIONS --- */
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
-
-        // Close modal if clicking outside content
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('show');
-            }
-        }
-
-        /* --- IKLAN INTERSTITIAL FUNCTION --- */
-        const adUrl = "https://deductpursue.com/isxt18cv5?key=9dc3d672ab267827f9065674f6a3407f";
-
-        function showInterstitialThenExecute(callbackAction) {
-            // 1. Open Ad in new tab
-            window.open(adUrl, '_blank');
-            
-            // 2. Execute the result logic in current tab after a slight delay
-            // This ensures the user "goes to ad" but when they come back, the result is there.
-            setTimeout(callbackAction, 300); 
-        }
-
-        /* =========================================
-           1. FEATURE: TIMBANGAN (BMI) LOGIC
-           ========================================= */
+        // --- CONSTANTS & DATA ---
         
-        // Data Foto (Direct Links as provided)
-        const images = {
-            pria: {
-                kurus: "https://i.postimg.cc/3xfvbdVF/Gemini_Generated_Image_e156jze156jze156.png",
-                ideal: "https://i.postimg.cc/sDD1d3pY/Jos-Luis.jpg",
-                gemuk: "https://i.postimg.cc/0NqsvCLF/Gemini_Generated_Image_rz8uxerz8uxerz8u.png",
-                obesitas: "https://i.postimg.cc/HLmfRkMj/Gemini_Generated_Image_6anme86anme86anm.png"
+        // BMI Images provided by user
+        const bmiImages = {
+            'Pria': {
+                'Kurus': 'https://i.postimg.cc/3xfvbdVF/Gemini_Generated_Image_e156jze156jze156.png',
+                'Ideal': 'https://i.postimg.cc/sDD1d3pY/José_Luis.jpg',
+                'Gemuk': 'https://i.postimg.cc/0NqsvCLF/Gemini_Generated_Image_rz8uxerz8uxerz8u.png',
+                'Obesitas': 'https://i.postimg.cc/HLmfRkMj/Gemini_Generated_Image_6anme86anme86anm.png'
             },
-            wanita: {
-                kurus: "https://i.postimg.cc/cLLxjTGc/Gemini_Generated_Image_s4dzws4dzws4dzws.png",
-                ideal: "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg",
-                gemuk: "https://i.postimg.cc/xTbymG45/Gemini_Generated_Image_ji0k0yji0k0yji0k.png",
-                obesitas: "https://i.postimg.cc/tTKdvY1h/Gemini_Generated_Image_45m3ya45m3ya45m3.png"
+            'Wanita': {
+                'Kurus': 'https://i.postimg.cc/cLLxjTGc/Gemini_Generated_Image_s4dzws4dzws4dzws.png',
+                'Ideal': 'https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg',
+                'Gemuk': 'https://i.postimg.cc/xTbymG45/Gemini_Generated_Image_ji0k0yji0k0yji0k.png',
+                'Obesitas': 'https://i.postimg.cc/tTKdvY1h/Gemini_Generated_Image_45m3ya45m3ya45m3.png'
             }
         };
 
-        let selectedGender = null;
+        const adUrl = "https://deductpursue.com/isxt18cv5?key=9dc3d672ab267827f9065674f6a3407f";
 
-        function openGenderModal() {
-            const height = document.getElementById('bmi-height').value;
-            const weight = document.getElementById('bmi-weight').value;
-
-            if (!height || !weight || height <= 0 || weight <= 0) {
-                alert("Mohon isi tinggi dan berat badan dengan benar, Cantik!");
-                return;
-            }
-            // Reset gender selection style
-            document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('selected'));
-            selectedGender = null;
-            openModal('gender-modal');
-        }
-
-        function selectGender(gender) {
-            selectedGender = gender;
-            // Highlighting selection
-            document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-
-            // Close modal automatically after selection
-            setTimeout(() => {
-                closeModal('gender-modal');
-                // Trigger Ad then calculate
-                showInterstitialThenExecute(calculateBMI);
-            }, 500);
-        }
-
-        function calculateBMI() {
-            const heightCm = parseFloat(document.getElementById('bmi-height').value);
-            const weightKg = parseFloat(document.getElementById('bmi-weight').value);
-            
-            const heightM = heightCm / 100;
-            const bmi = weightKg / (heightM * heightM);
-            const bmiFixed = bmi.toFixed(1);
-
-            document.getElementById('bmi-value').innerText = bmiFixed;
-
-            let status = "";
-            let imgUrl = "";
-
-            if (bmi < 18.5) {
-                status = "Kurus";
-                imgUrl = images[selectedGender].kurus;
-            } else if (bmi >= 18.5 && bmi < 25) {
-                status = "Ideal";
-                imgUrl = images[selectedGender].ideal;
-            } else if (bmi >= 25 && bmi < 30) {
-                status = "Gemuk";
-                imgUrl = images[selectedGender].gemuk;
-            } else {
-                status = "Obesitas";
-                imgUrl = images[selectedGender].obesitas;
-            }
-
-            document.getElementById('bmi-status').innerText = status;
-            
-            // Set image source and ensure it shows full size via CSS cover
-            const imgElement = document.getElementById('bmi-visual');
-            imgElement.src = imgUrl;
-            
-            // Show result area and scroll to it smoothly
-            const resultArea = document.getElementById('bmi-result-area');
-            resultArea.style.display = 'block';
-            resultArea.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        /* =========================================
-           2. FEATURE: RAMALAN LOGIC
-           ========================================= */
-        
-        const fortunes = {
-            Asmara: [
-                "Hari ini seseorang dari masa lalu mungkin memikirkanmu. Siap-siap baper!",
-                "Komunikasi adalah kunci hari ini. Ungkapkan perasaanmu yang sejujurnya pada si dia.",
-                "Bagi yang jomblo, aura kecantikanmu sedang memancar kuat. Seseorang sedang memperhatikanmu!",
-                "Jangan terlalu cuek, pasanganmu butuh sedikit perhatian lebih hari ini. Hadiah kecil akan membantu."
+        // Random Forecast Data
+        const forecastData = {
+            'Asmara': [
+                "Hari ini si dia sedang memikirkanmu terus. Siap-siap dapet kejutan manis!",
+                "Komunikasi adalah kunci. Cobalah untuk lebih terbuka malam ini.",
+                "Seseorang dari masa lalu mungkin akan menghubungimu kembali. Pertimbangkan baik-baik.",
+                "Jomblo? Hari ini ada potensi bertemu seseorang yang 'klik' di tempat tak terduga."
             ],
-            Keuangan: [
-                "Wah, ada potensi rezeki nomplok tak terduga minggu ini! Gunakan dengan bijak ya.",
-                "Keuanganmu sedang stabil, tapi hindari belanja impulsif barang-barang gemas yang tidak perlu.",
-                "Waktunya mulai menabung untuk barang impianmu. Disiplin sedikit lagi!",
-                "Hati-hati dalam meminjamkan uang hari ini. Pikirkan matang-matang."
+            'Keuangan': [
+                "Rezeki nomplok sedang menuju kearahmu. Gunakan dengan bijak!",
+                "Hindari pengeluaran impulsif hari ini, dompetmu butuh istirahat.",
+                "Waktu yang baik untuk merencanakan investasi jangka panjang.",
+                "Ada sedikit pengeluaran tak terduga, tapi jangan khawatir, semua akan terkendali."
             ],
-            Karir: [
-                "Kerja kerasmu mulai dilirik atasan. Pertahankan performa cantikmu!",
-                "Ada peluang kolaborasi menarik hari ini. Jangan ragu untuk mengambil inisiatif.",
-                "Fokusmu sedikit terganggu. Coba buat to-do list agar pekerjaan selesai tepat waktu.",
-                "Jangan takut menyuarakan ide kreatifmu di rapat. Idenya sangat cemerlang!"
+            'Karir': [
+                "Kerja kerasmu mulai dilirik atasan. Pertahankan performamu!",
+                "Rekan kerja mungkin butuh bantuanmu. Jadilah tim player yang baik.",
+                "Jangan takut untuk mengutarakan ide cemerlangmu di rapat besok.",
+                "Peluang karir baru mungkin terbuka. Update CV kamu."
             ]
         };
 
-        function openForecastModal() {
-            document.getElementById('forecast-text').style.display = 'none';
-            openModal('forecast-modal');
-        }
-
-        function getForecast(topic) {
-            closeModal('forecast-modal');
-            
-            // Show Interstitial AD first
-            showInterstitialThenExecute(() => {
-                const topicFortunes = fortunes[topic];
-                const randomFortune = topicFortunes[Math.floor(Math.random() * topicFortunes.length)];
-                
-                const forecastDiv = document.getElementById('forecast-text');
-                forecastDiv.innerHTML = `<strong>Ramalan ${topic} Kamu:</strong><br>${randomFortune}`;
-                forecastDiv.style.display = 'block';
-                forecastDiv.scrollIntoView({ behavior: 'smooth' });
-            });
-        }
-
-        /* =========================================
-           3. FEATURE: KECOCOKAN & KAPAN NIKAH
-           ========================================= */
-        
-        function calculateCompatibility() {
-            const name1 = document.getElementById('name-user').value.trim();
-            const name2 = document.getElementById('name-partner').value.trim();
-
-            if (!name1 || !name2) {
-                alert("Isi kedua nama dulu dong, Cantik!");
-                return;
-            }
-
-            // Pseudo-random calculation based on name lengths + deterministic factor
-            let combinedLength = name1.length + name2.length;
-            let score = (combinedLength * 7) % 101; 
-            
-            // Ensure score is decent for premium feel, unless names are very short
-            if (score < 40) score += 40;
-            if (score > 100) score = 99;
-
-            document.getElementById('compatibility-percent').innerText = score;
-            
-            let desc = "";
-            if (score >= 85) desc = "Wah! Kalian adalah pasangan 'Soulmate' premium. Serasi banget!";
-            else if (score >= 70) desc = "Hubungan kalian sangat harmonis dan penuh cinta. Lucu deh!";
-            else if (score >= 50) desc = "Cukup cocok, tapi butuh sedikit lebih banyak komunikasi manis.";
-            else desc = "Tantangan ada, tapi cinta bisa mengalahkan segalanya, kan?";
-
-            document.getElementById('compatibility-desc').innerText = desc;
-            document.getElementById('compatibility-result').style.display = 'block';
-            document.getElementById('compatibility-result').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function calculateWeddingDate() {
-            const birthdate = document.getElementById('birthdate').value;
-            const name = document.getElementById('name-user').value;
-
-            if (!birthdate || !name) {
-                alert("Isi tanggal lahirmu dan namamu dulu ya!");
-                return;
-            }
-
-            // TRIGGER AD FOR THIS BUTTON
-            showInterstitialThenExecute(() => {
-                const yearsToAdd = Math.floor(Math.random() * 7) + 1; // 1 to 7 years from now
-                const currentYear = new Date().getFullYear();
-                const weddingYear = currentYear + yearsToAdd;
-                
-                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-                const randomMonth = months[Math.floor(Math.random() * months.length)];
-                const randomDay = Math.floor(Math.random() * 28) + 1;
-
-                const resultText = `Berdasarkan bintang-bintang, ${name} diramalkan akan menikah pada:<br><strong>${randomDay} ${randomMonth} ${weddingYear}</strong><br>(Ini cuma seru-seruan ya!)`;
-                
-                const resultDiv = document.getElementById('wedding-result');
-                resultDiv.innerHTML = resultText;
-                resultDiv.style.display = 'block';
-                resultDiv.scrollIntoView({ behavior: 'smooth' });
-            });
-        }
-
-        /* =========================================
-           4. FEATURE: BERTANYA MERPATI (Magic Conch)
-           ========================================= */
-        
         const pigeonAnswers = [
             "Ya, tentu saja!",
-            "Sangat mungkin.",
-            "Tanyakan lagi nanti, ya.",
-            "Merpati bilang: Tidak.",
+            "Tidak mungkin.",
+            "Mungkin saja, coba tanya lagi nanti.",
+            "Sangat sangat mungkin!",
             "Jangan berharap terlalu banyak.",
-            "Coba tanyakan hatimu.",
-            "Pastinya, Cantik!",
-            "Sepertinya tidak."
+            "Merpati sedang lelah, tanya nanti.",
+            "Tanda-tandanya mengarah ke YA."
         ];
 
-        // SpongeBob "Magic Conch" style voice synthesis
-        function speakAnswer(text) {
-            if ('speechSynthesis' in window) {
-                // Cancel any ongoing speech
-                window.speechSynthesis.cancel();
+        // --- GLOBAL STATE ---
+        let selectedGender = null;
+        let selectedForecastType = null;
+
+        // --- INITIALIZATION ---
+        window.addEventListener('load', function() {
+            // Hide Preloader
+            setTimeout(() => {
+                document.getElementById('preloader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('preloader').style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // --- NAVIGATION LOGIC ---
+        const navLinks = document.querySelectorAll('#main-nav a');
+        const sections = document.querySelectorAll('.feature-container');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'id-ID'; // Indonesian
-                utterance.pitch = 1.8; // High pitch like a funny shell/cartoon
-                utterance.rate = 1.0;  // Normal speed
-                utterance.volume = 1.0;
-                
-                window.speechSynthesis.speak(utterance);
-            } else {
-                console.log("Speech synthesis not supported.");
-            }
+                // Update active link
+                navLinks.forEach(nl => nl.classList.remove('active'));
+                this.classList.add('active');
+
+                // Show corresponding section
+                const targetFeature = this.getAttribute('data-feature');
+                sections.forEach(sec => {
+                    sec.classList.add('hidden');
+                    if(sec.id === `feat-${targetFeature}`) {
+                        sec.classList.remove('hidden');
+                    }
+                });
+            });
+        });
+
+        // --- PREMIUM POPUP (MODAL) LOGIC ---
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
         }
 
-        function askPigeon() {
-            const answerDiv = document.getElementById('pigeon-answer');
-            answerDiv.innerHTML = '<span class="loading-dots">Merpati sedang berpikir</span>';
-            
-            const pigeonIcon = document.querySelector('.shell-icon');
-            pigeonIcon.style.animation = "pulse 0.5s infinite"; // Add temporary pulse animation via JS
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
 
-            // Add short delay for dramatic effect
+        // --- TIMBANGAN (BMI) LOGIC ---
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.getElementById('selected-gender-text').innerText = gender;
+            document.getElementById('selected-gender-text').style.color = 'white';
+            closeModal('gender-modal');
+        }
+
+        function calculateBMIandShowAd() {
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            if (!selectedGender) {
+                alert("Pilih jenis kelamin dulu ya cantik!");
+                openModal('gender-modal');
+                return;
+            }
+            if (!height || !weight || height <= 0 || weight <= 0) {
+                alert("Isi tinggi dan berat badan dengan benar ya!");
+                return;
+            }
+
+            // Calculate BMI: weight(kg) / (height(m)^2)
+            const heightInMeters = height / 100;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+
+            // Determine Status and Image
+            let status = "";
+            let statusClass = "";
+            if (bmi < 18.5) {
+                status = "Kurus";
+                statusClass = "status-kurus";
+            } else if (bmi >= 18.5 && bmi < 25) {
+                status = "Ideal";
+                statusClass = "status-ideal";
+            } else if (bmi >= 25 && bmi < 30) {
+                status = "Gemuk";
+                statusClass = "status-gemuk";
+            } else {
+                status = "Obesitas";
+                statusClass = "status-obesitas";
+            }
+
+            // Update UI
+            document.getElementById('bmi-value').innerText = bmi;
+            document.getElementById('bmi-status-text').innerText = status;
+            document.getElementById('bmi-status-text').className = statusClass;
+            
+            // Set full visual image
+            const imgUrl = bmiImages[selectedGender][status];
+            document.getElementById('bmi-visual-img').src = imgUrl;
+
+            // Show Result Area
+            document.getElementById('bmi-result-area').classList.remove('hidden');
+
+            // --- ADS LOGIC (Direct Link) ---
+            // Buka iklan di tab baru
+            window.open(adUrl, '_blank');
+        }
+
+        // --- RAMALAN LOGIC ---
+        function selectForecast(type) {
+            selectedForecastType = type;
+            document.getElementById('selected-forecast-text').innerText = "Ramalan " + type;
+            document.getElementById('selected-forecast-text').style.color = 'var(--accent-pink)';
+            closeModal('forecast-modal');
+            showForecastResult(type);
+        }
+
+        function showForecastResult(type) {
+            const predictions = forecastData[type];
+            const randomPrediction = predictions[Math.floor(Math.random() * predictions.length)];
+
+            document.getElementById('forecast-title').innerText = "Hasil Ramalan " + type;
+            document.getElementById('forecast-text').innerText = randomPrediction;
+            document.getElementById('forecast-result-area').classList.remove('hidden');
+        }
+
+        // --- KECOCOKAN & KAPAN NIKAH LOGIC ---
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+
+            if (!name1 || !name2) {
+                alert("Isi nama kamu dan pasanganmu dulu ya!");
+                return;
+            }
+
+            // Simple random logic based on name lengths (for fun)
+            const combinedNames = (name1 + name2).toLowerCase().replace(/ /g, "");
+            let sum = 0;
+            for (let i = 0; i < combinedNames.length; i++) {
+                sum += combinedNames.charCodeAt(i);
+            }
+            
+            let loveScore = (sum % 101); // 0 to 100
+            
+            // Guarantee some love :)
+            if(loveScore < 30) loveScore += 40;
+            if(loveScore > 100) loveScore = 99;
+
+            document.getElementById('love-score').innerText = loveScore + "%";
+            
+            let summary = "";
+            if(loveScore > 80) summary = "Pasangan Serasi! Cinta kalian sangat kuat.";
+            else if(loveScore > 60) summary = "Cukup Cocok! Hubungan kalian harmonis.";
+            else if(loveScore > 40) summary = "Lumayan, tapi butuh komunikasi lebih baik.";
+            else summary = "Banyak rintangan, tapi cinta bisa mengalahkan segalanya.";
+
+            document.getElementById('love-summary').innerText = summary;
+            document.getElementById('love-result-area').classList.remove('hidden');
+        }
+
+        function calculateMarriageAndShowAd() {
+            const birthdate = document.getElementById('birthdate').value;
+            const name1 = document.getElementById('name1').value.trim();
+
+            if (!birthdate || !name1) {
+                alert("Isi nama kamu dan tanggal lahirmu dulu untuk menghitung!");
+                return;
+            }
+
+            // Show Thinking state
+            const resultDiv = document.getElementById('marriage-result');
+            resultDiv.innerHTML = 'Menerawang masa depan<span class="dots"></span><span class="dots"></span><span class="dots"></span>';
+            resultDiv.classList.remove('hidden');
+
+            setTimeout(() => {
+                const yearsToAdd = Math.floor(Math.random() * 10) + 1; // Random 1-10 years
+                const monthsToAdd = Math.floor(Math.random() * 12);
+                
+                const currentYear = new Date().getFullYear();
+                const marriageYear = currentYear + yearsToAdd;
+                
+                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                const marriageMonth = months[monthsToAdd];
+
+                resultDiv.innerText = `Berdasarkan terawangan, ${name1} kemungkinan akan menikah pada: ${marriageMonth} ${marriageYear}. (Ini hanya hiburan ya!)`;
+            
+                // --- ADS LOGIC (Direct Link) ---
+                // Buka iklan di tab baru setelah hasil muncul
+                window.open(adUrl, '_blank');
+
+            }, 2000); // 2 second delay for realism
+        }
+
+        // --- BERTANYA MERPATI LOGIC (Speech Recognition & Sound) ---
+        function askPigeon() {
+            const micBtn = document.getElementById('mic-btn');
+            const micStatus = document.getElementById('mic-status');
+            const answerArea = document.getElementById('pigeon-answer-area');
+            const sound = document.getElementById('pigeon-sound');
+
+            // Web Speech API
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+                alert("Maaf, browsermu tidak mendukung fitur bertanya lewat suara. Coba gunakan Chrome atau Edge terbaru.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'id-ID';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                micBtn.classList.add('recording');
+                micStatus.innerText = "Mendengarkan... Mulailah dengan 'Apakah...'";
+                answerArea.classList.add('hidden');
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                micStatus.innerText = `Kamu bertanya: "${transcript}"`;
+                micBtn.classList.remove('recording');
+
+                // Process answer after delay
+                processPigeonAnswer(transcript);
+            };
+
+            recognition.onerror = (event) => {
+                micBtn.classList.remove('recording');
+                micStatus.innerText = "Error mendengar. Coba tekan mic lagi.";
+                console.error(event.error);
+            };
+
+            recognition.onend = () => {
+                micBtn.classList.remove('recording');
+            };
+
+            recognition.start();
+        }
+
+        function processPigeonAnswer(question) {
+            const answerArea = document.getElementById('pigeon-answer-area');
+            const sound = document.getElementById('pigeon-sound');
+
+            // 1. Show thinking state immediately
+            answerArea.innerHTML = '<span class="dots"></span><span class="dots"></span><span class="dots"></span>';
+            answerArea.classList.remove('hidden');
+
+            // 2. Play Sound immediately (interacted with mic btn already)
+            sound.play();
+
+            // 3. 3-second delay before showing the final answer
             setTimeout(() => {
                 const randomAnswer = pigeonAnswers[Math.floor(Math.random() * pigeonAnswers.length)];
-                answerDiv.innerText = randomAnswer;
                 
-                speakAnswer(randomAnswer); // Play sound
-                pigeonIcon.style.animation = ""; // Stop animation
-            }, 1500);
+                // Cek apakah pertanyaan diawali 'apakah' (opsional, untuk hiburan)
+                if(!question.toLowerCase().startsWith("apakah")) {
+                    answerArea.innerText = "Merpati hanya menjawab pertanyaan yang diawali 'Apakah........?'";
+                } else {
+                    answerArea.innerText = randomAnswer;
+                }
+            }, 3000);
         }
-        
-        // Dynamic Keyframes for pulsing icon
-        const styleSheet = document.styleSheets[0];
-        styleSheet.insertRule(`
-            @keyframes pulse {
-                0% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.1); opacity: 0.7; color: var(--deep-pink); }
-                100% { transform: scale(1); opacity: 1; }
-            }
-        `, styleSheet.cssRules.length);
-
     </script>
 </body>
 </html>
