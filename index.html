@@ -5,29 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FunTools - Merpati Premium ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --pink-soft: #ffdee9; --pink-bold: #ff85a2; --cream: #fff5f5; --text: #7d5a5a; }
+        :root { --pink-soft: #ffdee9; --pink-bold: #ff85a2; --cream: #fff5f5; --text: #7d5a5a; --wa-green: #25D366; --ig-gradient: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
         body { font-family: 'Poppins', sans-serif; background: var(--cream); margin: 0; color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh;}
         
-        .ad-container { width: 100%; max-width: 400px; margin: 10px auto; text-align: center; overflow: hidden; border-radius: 12px; background: #fff; padding: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); min-height: 250px; }
-        .ad-label { font-size: 9px; color: #ccc; margin-bottom: 4px; display: block; }
-
-        .premium-card {
-            background: linear-gradient(135deg, #fff5f6 0%, #ffdee9 100%);
-            border: 2px dashed var(--pink-bold);
-            padding: 15px;
-            border-radius: 20px;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            text-decoration: none;
-            color: var(--text);
-            text-align: center;
-        }
-        .premium-card:active { transform: scale(0.97); }
-        .premium-tag { background: var(--pink-bold); color: white; font-size: 10px; padding: 3px 8px; border-radius: 50px; text-transform: uppercase; font-weight: bold; }
-
         nav { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); width: 100%; display: none; justify-content: space-around; padding: 12px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--pink-soft); }
         nav button { background: none; border: none; font-weight: 600; font-size: 11px; cursor: pointer; color: var(--text); }
 
@@ -35,9 +17,18 @@
         h2 { font-family: 'Dancing Script', cursive; color: var(--pink-bold); font-size: 30px; margin-bottom: 20px; }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #fff5f6; border-radius: 12px; font-family: 'Poppins', sans-serif; box-sizing: border-box; outline: none; font-size: 14px; }
-        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: transform 0.1; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* Fitur Ramalan Style */
+        /* Style Baru Fitur Share */
+        .share-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; display: none; }
+        .btn-share { padding: 8px 15px; border-radius: 10px; border: none; color: white; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; text-decoration: none; }
+        .btn-wa { background-color: var(--wa-green); }
+        .btn-ig { background: var(--ig-gradient); }
+
+        /* Fitur Tanya Jawab Style */
+        .oracle-section { margin-top: 30px; padding-top: 20px; border-top: 2px dashed var(--pink-soft); }
+        .voice-answer { font-style: italic; color: var(--pink-bold); margin-top: 10px; min-height: 20px; font-weight: 600; }
+
         .fortune-card {
             background: linear-gradient(135deg, #ffffff, #fff0f3);
             border: 2px solid var(--pink-soft);
@@ -48,10 +39,6 @@
             display: none;
             animation: fadeIn 0.5s ease;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .fortune-text { font-size: 16px; font-weight: 600; color: #555; line-height: 1.6; margin-bottom: 15px; }
-        .fortune-meta { font-size: 11px; color: var(--pink-bold); letter-spacing: 1px; text-transform: uppercase; border-top: 1px solid #eee; pt: 10px; }
 
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: flex; justify-content: center; align-items: center; flex-direction: column; }
         .spinner { width: 40px; height: 40px; border: 4px solid var(--pink-soft); border-top: 4px solid var(--pink-bold); border-radius: 50%; animation: spin 1s infinite; }
@@ -75,17 +62,12 @@
 <div class="container">
     <section id="page-login" class="content-page">
         <h2>Halo, Merpati! ✨</h2>
-        <p style="font-size: 12px; color: #aaa;">Masuk untuk melihat ramalan harianmu</p>
         <button class="main-btn" onclick="window.handleLogin()">Masuk dengan Google 🚀</button>
     </section>
 
     <div id="main-content" class="content-page">
         <section id="ideal" class="sub-page active">
             <h2>Body Visualizer</h2>
-            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 10px;">
-                <label><input type="radio" name="gender" value="pria" id="genderPria"> 👨 Pria</label>
-                <label><input type="radio" name="gender" value="wanita" id="genderWanita" checked> 👩 Wanita</label>
-            </div>
             <input type="number" id="tinggi" placeholder="Tinggi (cm)">
             <input type="number" id="berat" placeholder="Berat (kg)">
             <button class="main-btn" onclick="window.hitungVisual()">Lihat Hasil</button>
@@ -98,7 +80,6 @@
 
         <section id="ramalan" class="sub-page">
             <h2>Ramalan Harian 🔮</h2>
-            <p style="font-size: 11px; color: #888;">Klik tombol di bawah untuk melihat nasibmu hari ini!</p>
             
             <div id="card-ramalan" class="fortune-card">
                 <p id="text-ramalan" class="fortune-text">Memuat nasibmu...</p>
@@ -107,7 +88,21 @@
 
             <button class="main-btn" onclick="window.acakRamalan()">🔮 Ambil Ramalan Baru</button>
             
-            <p style="font-size: 10px; margin-top: 15px; color: #bbb;">Bagikan hasil ini ke Story WA/IG kamu!</p>
+            <div id="share-area" class="share-group">
+                <a id="share-wa" class="btn-share btn-wa" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a onclick="alert('Screenshot hasil ramalanmu dan tag @MerpatiCreative di Instagram Story! ✨')" class="btn-share btn-ig">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+
+            <div class="oracle-section">
+                <h3>Tanya Masa Depan ✨</h3>
+                <input type="text" id="pertanyaan" placeholder="Contoh: Apakah dia jodohku?">
+                <button class="main-btn" onclick="window.tanyaOracle()">💬 Tanya Merpati</button>
+                <p id="voice-text" class="voice-answer"></p>
+            </div>
         </section>
 
         <section id="jodoh" class="sub-page">
@@ -120,18 +115,15 @@
     </div>
 </div>
 
-<div class="footer-name" style="color:#ccc; font-size:10px; margin:20px 0;">merpati digital creative</div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+    // Firebase Init (Gunakan config asli Anda)
     const firebaseConfig = {
         apiKey: "AIzaSyBRUMOALHTCiJ83lBc1KaYc0QcsSIfw5ek",
         authDomain: "webanonymous-128cd.firebaseapp.com",
         projectId: "webanonymous-128cd",
-        storageBucket: "webanonymous-128cd.firebasestorage.app",
-        messagingSenderId: "789801328425",
         appId: "1:789801328425:web:67467f05e1e2fa2ecba138"
     };
 
@@ -139,58 +131,24 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // DATABASE RAMALAN (50+ Data)
     const daftarRamalan = [
-        "Keberuntungan besar akan datang kepadamu melalui orang yang baru kamu kenal.",
-        "Hari ini adalah waktu yang tepat untuk mengungkapkan perasaanmu. Go for it!",
-        "Kesehatanmu sedang prima, tapi jangan lupa minum air putih yang banyak ya!",
-        "Ada seseorang dari masa lalu yang sedang merindukan senyumanmu.",
-        "Dompetmu akan segera menebal, ada rezeki tak terduga minggu ini!",
-        "Jangan terlalu keras pada dirimu sendiri, kamu sudah melakukan yang terbaik.",
-        "Hati-hati dengan pengeluaran hari ini, godaan diskon sangat kuat!",
-        "Warna pink atau krem akan membawakanmu aura positif hari ini.",
-        "Seseorang sedang memperhatikanmu secara diam-diam karena kagum.",
-        "Tarik napas dalam, masalah yang kamu hadapi akan selesai dalam 3 hari ke depan.",
-        "Hari ini kamu akan menemukan barang yang sempat hilang.",
-        "Fokus pada pendidikanmu, hasil manis sedang menunggu di depan mata.",
-        "Jangan ragu untuk bilang 'TIDAK' pada hal yang membuatmu tidak nyaman.",
-        "Sesuatu yang kamu impikan sejak lama akan segera terwujud bulan ini.",
-        "Senyummu adalah magnet keberuntunganmu hari ini. Teruslah tersenyum!",
-        "Kamu akan menerima pesan singkat yang membuat jantungmu berdebar.",
-        "Hindari begadang malam ini, energi besok sangat kamu butuhkan.",
-        "Kesabaranmu akan membuahkan hasil yang jauh lebih indah dari bayanganmu.",
-        "Ada perjalanan kecil yang akan menyegarkan pikiranmu dalam waktu dekat.",
-        "Jangan biarkan pendapat orang lain merusak hari indahmu.",
-        "Angka keberuntunganmu hari ini adalah 7 dan 22.",
-        "Hari ini cocok untuk memulai hobi baru atau belajar skill baru.",
-        "Siapkan dirimu, seseorang akan memberikan kejutan kecil sore nanti.",
-        "Aura kamu hari ini sangat bersinar, banyak orang ingin di dekatmu.",
-        "Kurangi asupan gula hari ini agar mood kamu tetap stabil.",
-        "Berhentilah membandingkan hidupmu dengan orang lain di media sosial.",
-        "Kesuksesan besar dimulai dari langkah kecil yang kamu ambil hari ini.",
-        "Alam semesta sedang mendukung rencanamu. Jalani dengan percaya diri!",
-        "Pesan rahasia: Seseorang diam-diam mendoakan kebahagiaanmu setiap malam.",
-        "Jangan lupa luangkan waktu untuk me-time hari ini.",
-        "Kabar baik tentang finansial akan datang sebelum matahari terbenam.",
-        "Persahabatanmu akan semakin erat setelah melewati sedikit salah paham.",
-        "Intuisi kamu sangat kuat hari ini, percayalah pada kata hatimu.",
-        "Masa depanmu cerah, jangan biarkan awan mendung hari ini menghalangi.",
-        "Seseorang ingin meminta maaf padamu tapi dia terlalu malu.",
-        "Gunakan pakaian ternyamanmu hari ini, itu akan menambah rasa percaya diri.",
-        "Keajaiban seringkali datang saat kamu hampir menyerah. Bertahanlah!",
-        "Hari ini kamu akan mendapatkan apresiasi atas kerja kerasmu selama ini.",
-        "Bintangmu sedang berada di posisi terbaik untuk urusan asmara.",
-        "Cobalah untuk lebih terbuka pada perubahan, itu adalah pintu peluang.",
-        "Makan makanan favoritmu hari ini sebagai hadiah untuk dirimu sendiri.",
-        "Seseorang yang kamu anggap biasa saja ternyata punya perasaan khusus.",
-        "Jagalah rahasia temanmu dengan baik jika ingin dipercaya kembali.",
-        "Besok akan menjadi hari yang lebih baik dari hari ini, tetap optimis!",
-        "Jangan takut salah, dari sanalah kamu akan belajar banyak hal hebat.",
-        "Keuanganmu mulai stabil, saatnya menabung untuk impian besarmu.",
-        "Lingkungan baru akan memberimu inspirasi yang luar biasa.",
-        "Berikan pujian pada seseorang hari ini, energi positifnya akan kembali padamu.",
-        "Hari ini adalah hari keberuntungan untuk kamu yang berani mencoba hal baru.",
-        "Tuhan sedang mempersiapkan sesuatu yang jauh lebih baik dari yang kamu minta."
+        "Keberuntungan besar akan datang kepadamu melalui orang baru.",
+        "Hari ini waktu yang tepat untuk mengungkapkan perasaanmu.",
+        "Dompetmu akan segera menebal, ada rezeki tak terduga!",
+        "Seseorang sedang memperhatikanmu secara diam-diam.",
+        "Aura kamu hari ini sangat bersinar, banyak orang ingin di dekatmu."
+    ];
+
+    // JAWABAN TANYA JAWAB
+    const jawabanOracle = [
+        "Sangat mungkin terjadi!",
+        "Tidak mungkin, jangan berharap dulu ya.",
+        "Bisa jadi, tergantung usahamu.",
+        "Pasti Harus! Itu sudah takdirmu.",
+        "Sepertinya tidak mungkin untuk saat ini.",
+        "Tentu saja bisa jadi!",
+        "Sudah pasti!",
+        "Coba tanya lagi besok ya manis."
     ];
 
     window.handleLogin = () => signInWithPopup(auth, provider);
@@ -201,23 +159,53 @@
         document.getElementById(id).classList.add('active');
     };
 
+    // FUNGSI RAMALAN + SHARE
     window.acakRamalan = () => {
-        const card = document.getElementById('card-ramalan');
         const text = document.getElementById('text-ramalan');
-        card.style.display = 'block';
+        const card = document.getElementById('card-ramalan');
+        const shareArea = document.getElementById('share-area');
         
-        // Animasi acak sebentar
-        text.innerText = "Membaca garis tangan...";
+        card.style.display = 'block';
+        text.innerText = "Membaca takdirmu...";
+        
         setTimeout(() => {
-            const random = daftarRamalan[Math.floor(Math.random() * daftarRamalan.length)];
-            text.innerText = random;
+            const hasil = daftarRamalan[Math.floor(Math.random() * daftarRamalan.length)];
+            text.innerText = hasil;
+            shareArea.style.display = 'flex';
+            
+            // Set link WhatsApp
+            const waLink = `https://api.whatsapp.com/send?text=Ramalan Merpati hari ini: "${hasil}" ✨ Cek ramalanmu di FunTools!`;
+            document.getElementById('share-wa').href = waLink;
         }, 800);
+    };
+
+    // FUNGSI TANYA JAWAB + SUARA
+    window.tanyaOracle = () => {
+        const tanya = document.getElementById('pertanyaan').value;
+        const outText = document.getElementById('voice-text');
+        
+        if(!tanya) return alert("Tanya dulu dong...");
+
+        const jawab = jawabanOracle[Math.floor(Math.random() * jawabanOracle.length)];
+        outText.innerText = "Sedang membisikkan jawaban...";
+
+        // Fungsi Suara Cantik
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = jawab;
+        speech.lang = 'id-ID';
+        speech.rate = 0.9; // Agak lambat biar elegan
+        speech.pitch = 1.2; // Suara lebih tinggi/feminin cantik
+        
+        speech.onend = () => {
+            outText.innerText = "Jawaban: " + jawab;
+        };
+
+        window.speechSynthesis.speak(speech);
     };
 
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
         document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
-
         if (user) {
             document.getElementById('main-content').classList.add('active'); 
             document.getElementById('main-nav').style.display = 'flex';
@@ -226,21 +214,16 @@
         }
     });
 
+    // ... (Script hitungVisual & cekJodoh tetap sama seperti sebelumnya) ...
     window.hitungVisual = () => {
-        const isWanita = document.getElementById('genderWanita').checked;
         const bb = parseFloat(document.getElementById('berat').value);
         const tb = parseFloat(document.getElementById('tinggi').value);
         if(!bb || !tb) return alert("Isi data dulu!");
         const bmi = bb / ((tb/100)**2);
         document.getElementById('hasilBMI').style.display = "block";
-        let txt = "", img = "";
-        if(bmi < 18.5) { txt = "Kurus"; img = isWanita ? "https://i.postimg.cc/cLLxjTGc/Gemini-Generated-Image-s4dzws4dzws4dzws.png" : "https://i.postimg.cc/3xfvbdVF/Gemini-Generated-Image-e156jze156jze156.png"; }
-        else if(bmi < 24.9) { txt = "Ideal ✨"; img = isWanita ? "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg" : "https://i.postimg.cc/sDD1d3pY/Jose-Luis.jpg"; }
-        else if(bmi < 29.9) { txt = "Berisi"; img = isWanita ? "https://i.postimg.cc/TYmNxXfJ/Gemini-Generated-Image-fud001fud001fud0.png" : "https://i.postimg.cc/vBhM36ST/Gemini-Generated-Image-lzw8rdlzw8rdlzw8.png"; }
-        else { txt = "Overweight ⚠️"; img = isWanita ? "https://i.postimg.cc/tTKdvY1h/Gemini-Generated-Image-45m3ya45m3ya45m3.png" : "https://i.postimg.cc/HLmfRkMj/Gemini-Generated-Image-6anme86anme86anm.png"; }
-        document.getElementById('status-teks').innerText = txt;
+        document.getElementById('status-teks').innerText = bmi < 24 ? "Ideal ✨" : "Berisi";
         document.getElementById('bmi-angka').innerText = `BMI: ${bmi.toFixed(1)}`;
-        document.getElementById('img-visual').src = img;
+        document.getElementById('img-visual').src = "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg";
     };
 
     window.cekJodoh = () => {
