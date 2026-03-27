@@ -17,20 +17,17 @@
         h2 { font-family: 'Dancing Script', cursive; color: var(--pink-bold); font-size: 30px; margin-bottom: 20px; }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #fff5f6; border-radius: 12px; font-family: 'Poppins', sans-serif; box-sizing: border-box; outline: none; font-size: 14px; }
-        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .main-btn:active { transform: scale(0.95); }
+        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: transform 0.1; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
+        /* Style Baru Fitur Share */
         .share-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; display: none; }
         .btn-share { padding: 8px 15px; border-radius: 10px; border: none; color: white; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; text-decoration: none; }
         .btn-wa { background-color: var(--wa-green); }
         .btn-ig { background: var(--ig-gradient); }
 
+        /* Fitur Tanya Jawab Style */
         .oracle-section { margin-top: 30px; padding-top: 20px; border-top: 2px dashed var(--pink-soft); }
-        .voice-answer { font-style: italic; color: var(--pink-bold); margin-top: 10px; min-height: 50px; font-weight: 600; line-height: 1.4; }
-        
-        /* Animasi Mic saat Aktif */
-        .mic-active { animation: pulse-red 1s infinite; background: #ff4d4d !important; }
-        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); } }
+        .voice-answer { font-style: italic; color: var(--pink-bold); margin-top: 10px; min-height: 20px; font-weight: 600; }
 
         .fortune-card {
             background: linear-gradient(135deg, #ffffff, #fff0f3);
@@ -69,7 +66,6 @@
     </section>
 
     <div id="main-content" class="content-page">
-        
         <section id="ideal" class="sub-page active">
             <h2>Body Visualizer</h2>
             <input type="number" id="tinggi" placeholder="Tinggi (cm)">
@@ -84,25 +80,26 @@
 
         <section id="ramalan" class="sub-page">
             <h2>Ramalan Harian 🔮</h2>
+            
             <div id="card-ramalan" class="fortune-card">
                 <p id="text-ramalan" class="fortune-text">Memuat nasibmu...</p>
                 <div class="fortune-meta">📅 Ramalan Hari Ini</div>
             </div>
+
             <button class="main-btn" onclick="window.acakRamalan()">🔮 Ambil Ramalan Baru</button>
             
             <div id="share-area" class="share-group">
-                <a id="share-wa" class="btn-share btn-wa" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a onclick="alert('Screenshot hasil ramalanmu dan tag @MerpatiCreative! ✨')" class="btn-share btn-ig"><i class="fab fa-instagram"></i> Instagram</a>
+                <a id="share-wa" class="btn-share btn-wa" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a onclick="alert('Screenshot hasil ramalanmu dan tag @MerpatiCreative di Instagram Story! ✨')" class="btn-share btn-ig">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
             </div>
 
             <div class="oracle-section">
                 <h3>Tanya Masa Depan ✨</h3>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                    <input type="text" id="pertanyaan" placeholder="Tekan mic untuk bicara...">
-                    <button id="btn-mic" class="main-btn" style="width: 55px; margin-top: 8px;">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                </div>
+                <input type="text" id="pertanyaan" placeholder="Contoh: Apakah dia jodohku?">
                 <button class="main-btn" onclick="window.tanyaOracle()">💬 Tanya Merpati</button>
                 <p id="voice-text" class="voice-answer"></p>
             </div>
@@ -122,6 +119,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+    // Firebase Init (Gunakan config asli Anda)
     const firebaseConfig = {
         apiKey: "AIzaSyBRUMOALHTCiJ83lBc1KaYc0QcsSIfw5ek",
         authDomain: "webanonymous-128cd.firebaseapp.com",
@@ -141,6 +139,7 @@
         "Aura kamu hari ini sangat bersinar, banyak orang ingin di dekatmu."
     ];
 
+    // JAWABAN TANYA JAWAB
     const jawabanOracle = [
         "Sangat mungkin terjadi!",
         "Tidak mungkin, jangan berharap dulu ya.",
@@ -152,7 +151,6 @@
         "Coba tanya lagi besok ya manis."
     ];
 
-    // AUTH FUNCTIONS
     window.handleLogin = () => signInWithPopup(auth, provider);
     window.logout = () => signOut(auth).then(() => { window.location.reload(); });
 
@@ -161,95 +159,50 @@
         document.getElementById(id).classList.add('active');
     };
 
-    // BODY VISUALIZER
-    window.hitungVisual = () => {
-        const bb = parseFloat(document.getElementById('berat').value);
-        const tb = parseFloat(document.getElementById('tinggi').value);
-        if(!bb || !tb) return alert("Isi data dulu!");
-        const bmi = bb / ((tb/100)**2);
-        const hasilDiv = document.getElementById('hasilBMI');
-        hasilDiv.style.display = "block";
-        document.getElementById('status-teks').innerText = bmi < 24 ? "Ideal ✨" : "Berisi";
-        document.getElementById('bmi-angka').innerText = `BMI: ${bmi.toFixed(1)}`;
-        document.getElementById('img-visual').src = "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg";
-    };
-
-    // RAMALAN
+    // FUNGSI RAMALAN + SHARE
     window.acakRamalan = () => {
         const text = document.getElementById('text-ramalan');
         const card = document.getElementById('card-ramalan');
         const shareArea = document.getElementById('share-area');
+        
         card.style.display = 'block';
         text.innerText = "Membaca takdirmu...";
+        
         setTimeout(() => {
             const hasil = daftarRamalan[Math.floor(Math.random() * daftarRamalan.length)];
             text.innerText = hasil;
             shareArea.style.display = 'flex';
-            document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=Ramalan Merpati: "${hasil}" ✨`;
+            
+            // Set link WhatsApp
+            const waLink = `https://api.whatsapp.com/send?text=Ramalan Merpati hari ini: "${hasil}" ✨ Cek ramalanmu di FunTools!`;
+            document.getElementById('share-wa').href = waLink;
         }, 800);
     };
 
-    // LOVE METER
-    window.cekJodoh = () => {
-        const n1 = document.getElementById('nama1').value;
-        const n2 = document.getElementById('nama2').value;
-        if(!n1 || !n2) return alert("Masukkan nama!");
-        document.getElementById('hasilJodoh').innerText = Math.floor(Math.random()*40 + 60) + "% ❤️";
-    };
-
-    // --- FITUR VOICE RECOGNITION (Dengerin Suara) ---
-    const btnMic = document.getElementById('btn-mic');
-    const inputTanya = document.getElementById('pertanyaan');
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (SpeechRecognition) {
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'id-ID';
-
-        btnMic.onclick = () => {
-            recognition.start();
-            btnMic.classList.add('mic-active');
-            inputTanya.placeholder = "Mendengarkan...";
-        };
-
-        recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            inputTanya.value = transcript;
-            btnMic.classList.remove('mic-active');
-            setTimeout(() => { window.tanyaOracle(); }, 500);
-        };
-
-        recognition.onerror = () => {
-            btnMic.classList.remove('mic-active');
-            inputTanya.placeholder = "Gagal mendengar...";
-        };
-    } else {
-        btnMic.style.display = "none";
-    }
-
-    // --- FITUR TANYA JAWAB (Jawab Pakai Suara) ---
+    // FUNGSI TANYA JAWAB + SUARA
     window.tanyaOracle = () => {
-        const tanya = inputTanya.value;
+        const tanya = document.getElementById('pertanyaan').value;
         const outText = document.getElementById('voice-text');
-        if(!tanya) return alert("Bicara atau ketik sesuatu...");
+        
+        if(!tanya) return alert("Tanya dulu dong...");
 
         const jawab = jawabanOracle[Math.floor(Math.random() * jawabanOracle.length)];
-        outText.innerHTML = `<small>Kamu: "${tanya}"</small><br>Membisikkan takdir...`;
+        outText.innerText = "Sedang membisikkan jawaban...";
 
+        // Fungsi Suara Cantik
         const speech = new SpeechSynthesisUtterance();
         speech.text = jawab;
         speech.lang = 'id-ID';
-        speech.rate = 0.9;
-        speech.pitch = 1.3; // Suara imut
+        speech.rate = 0.9; // Agak lambat biar elegan
+        speech.pitch = 1.2; // Suara lebih tinggi/feminin cantik
         
         speech.onend = () => {
-            outText.innerHTML = `<small style="color:#999">Kamu: "${tanya}"</small><br>✨ ${jawab}`;
+            outText.innerText = "Jawaban: " + jawab;
         };
 
         window.speechSynthesis.speak(speech);
     };
 
-    // FIREBASE AUTH LISTENER
     onAuthStateChanged(auth, (user) => {
         document.getElementById('loader').style.display = 'none';
         document.querySelectorAll('.content-page').forEach(s => s.classList.remove('active'));
@@ -258,9 +211,27 @@
             document.getElementById('main-nav').style.display = 'flex';
         } else {
             document.getElementById('page-login').classList.add('active');
-            document.getElementById('main-nav').style.display = 'none';
         }
     });
+
+    // ... (Script hitungVisual & cekJodoh tetap sama seperti sebelumnya) ...
+    window.hitungVisual = () => {
+        const bb = parseFloat(document.getElementById('berat').value);
+        const tb = parseFloat(document.getElementById('tinggi').value);
+        if(!bb || !tb) return alert("Isi data dulu!");
+        const bmi = bb / ((tb/100)**2);
+        document.getElementById('hasilBMI').style.display = "block";
+        document.getElementById('status-teks').innerText = bmi < 24 ? "Ideal ✨" : "Berisi";
+        document.getElementById('bmi-angka').innerText = `BMI: ${bmi.toFixed(1)}`;
+        document.getElementById('img-visual').src = "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg";
+    };
+
+    window.cekJodoh = () => {
+        const n1 = document.getElementById('nama1').value;
+        const n2 = document.getElementById('nama2').value;
+        if(!n1 || !n2) return alert("Masukkan nama!");
+        document.getElementById('hasilJodoh').innerText = Math.floor(Math.random()*40 + 60) + "% ❤️";
+    };
 </script>
 
 </body>
