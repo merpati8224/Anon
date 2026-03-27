@@ -17,17 +17,17 @@
         h2 { font-family: 'Dancing Script', cursive; color: var(--pink-bold); font-size: 30px; margin-bottom: 20px; }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #fff5f6; border-radius: 12px; font-family: 'Poppins', sans-serif; box-sizing: border-box; outline: none; font-size: 14px; }
-        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: transform 0.1; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .main-btn { background: linear-gradient(45deg, #ffb6c1, #ff85a2); color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; -webkit-tap-highlight-color: transparent; }
+        .main-btn:active { transform: scale(0.95); opacity: 0.8; }
 
-        /* Style Baru Fitur Share */
         .share-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; display: none; }
         .btn-share { padding: 8px 15px; border-radius: 10px; border: none; color: white; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; text-decoration: none; }
         .btn-wa { background-color: var(--wa-green); }
         .btn-ig { background: var(--ig-gradient); }
 
-        /* Fitur Tanya Jawab Style */
         .oracle-section { margin-top: 30px; padding-top: 20px; border-top: 2px dashed var(--pink-soft); }
         .voice-answer { font-style: italic; color: var(--pink-bold); margin-top: 10px; min-height: 20px; font-weight: 600; }
+        .hint-text { font-size: 11px; color: #aaa; margin-bottom: 10px; }
 
         .fortune-card {
             background: linear-gradient(135deg, #ffffff, #fff0f3);
@@ -80,7 +80,6 @@
 
         <section id="ramalan" class="sub-page">
             <h2>Ramalan Harian 🔮</h2>
-            
             <div id="card-ramalan" class="fortune-card">
                 <p id="text-ramalan" class="fortune-text">Memuat nasibmu...</p>
                 <div class="fortune-meta">📅 Ramalan Hari Ini</div>
@@ -99,8 +98,14 @@
 
             <div class="oracle-section">
                 <h3>Tanya Masa Depan ✨</h3>
-                <input type="text" id="pertanyaan" placeholder="Contoh: Apakah dia jodohku?">
-                <button class="main-btn" onclick="window.tanyaOracle()">💬 Tanya Merpati</button>
+                <p class="hint-text">Tahan tombol untuk bicara, lepas untuk jawaban</p>
+                <button class="main-btn" id="btn-voice" 
+                        onmousedown="window.startVoice()" 
+                        onmouseup="window.stopVoice()" 
+                        ontouchstart="window.startVoice()" 
+                        ontouchend="window.stopVoice()">
+                    <i class="fas fa-microphone"></i> Tahan & Tanya Merpati
+                </button>
                 <p id="voice-text" class="voice-answer"></p>
             </div>
         </section>
@@ -119,7 +124,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // Firebase Init (Gunakan config asli Anda)
     const firebaseConfig = {
         apiKey: "AIzaSyBRUMOALHTCiJ83lBc1KaYc0QcsSIfw5ek",
         authDomain: "webanonymous-128cd.firebaseapp.com",
@@ -139,16 +143,13 @@
         "Aura kamu hari ini sangat bersinar, banyak orang ingin di dekatmu."
     ];
 
-    // JAWABAN TANYA JAWAB
+    // JAWABAN SESUAI PERMINTAAN
     const jawabanOracle = [
-        "Sangat mungkin terjadi!",
-        "Tidak mungkin, jangan berharap dulu ya.",
-        "Bisa jadi, tergantung usahamu.",
-        "Pasti Harus! Itu sudah takdirmu.",
-        "Sepertinya tidak mungkin untuk saat ini.",
-        "Tentu saja bisa jadi!",
-        "Sudah pasti!",
-        "Coba tanya lagi besok ya manis."
+        "Mungkin",
+        "Tidak mungkin",
+        "Pasti",
+        "Sudah pasti",
+        "Tidak akan mungkin"
     ];
 
     window.handleLogin = () => signInWithPopup(auth, provider);
@@ -159,45 +160,54 @@
         document.getElementById(id).classList.add('active');
     };
 
-    // FUNGSI RAMALAN + SHARE
     window.acakRamalan = () => {
         const text = document.getElementById('text-ramalan');
         const card = document.getElementById('card-ramalan');
         const shareArea = document.getElementById('share-area');
-        
         card.style.display = 'block';
         text.innerText = "Membaca takdirmu...";
-        
         setTimeout(() => {
             const hasil = daftarRamalan[Math.floor(Math.random() * daftarRamalan.length)];
             text.innerText = hasil;
             shareArea.style.display = 'flex';
-            
-            // Set link WhatsApp
             const waLink = `https://api.whatsapp.com/send?text=Ramalan Merpati hari ini: "${hasil}" ✨ Cek ramalanmu di FunTools!`;
             document.getElementById('share-wa').href = waLink;
         }, 800);
     };
 
-    // FUNGSI TANYA JAWAB + SUARA
-    window.tanyaOracle = () => {
-        const tanya = document.getElementById('pertanyaan').value;
+    // LOGIKA PESAN SUARA OTOMATIS
+    let isRecording = false;
+
+    window.startVoice = () => {
+        if(isRecording) return;
+        isRecording = true;
         const outText = document.getElementById('voice-text');
+        const btn = document.getElementById('btn-voice');
+        outText.innerText = "Mendengarkan suaramu... 👂";
+        btn.style.background = "linear-gradient(45deg, #ff4d6d, #ff85a2)";
         
-        if(!tanya) return alert("Tanya dulu dong...");
+        // Memberi getaran jika di HP
+        if (navigator.vibrate) navigator.vibrate(50);
+    };
 
+    window.stopVoice = () => {
+        if(!isRecording) return;
+        isRecording = false;
+        const outText = document.getElementById('voice-text');
+        const btn = document.getElementById('btn-voice');
+        btn.style.background = "linear-gradient(45deg, #ffb6c1, #ff85a2)";
+        
         const jawab = jawabanOracle[Math.floor(Math.random() * jawabanOracle.length)];
-        outText.innerText = "Sedang membisikkan jawaban...";
+        outText.innerText = "Merpati sedang menjawab...";
 
-        // Fungsi Suara Cantik
         const speech = new SpeechSynthesisUtterance();
         speech.text = jawab;
         speech.lang = 'id-ID';
-        speech.rate = 0.9; // Agak lambat biar elegan
-        speech.pitch = 1.2; // Suara lebih tinggi/feminin cantik
+        speech.rate = 0.9;
+        speech.pitch = 1.2;
         
         speech.onend = () => {
-            outText.innerText = "Jawaban: " + jawab;
+            outText.innerText = "Jawaban Merpati: " + jawab;
         };
 
         window.speechSynthesis.speak(speech);
@@ -214,7 +224,6 @@
         }
     });
 
-    // ... (Script hitungVisual & cekJodoh tetap sama seperti sebelumnya) ...
     window.hitungVisual = () => {
         const bb = parseFloat(document.getElementById('berat').value);
         const tb = parseFloat(document.getElementById('tinggi').value);
@@ -223,6 +232,7 @@
         document.getElementById('hasilBMI').style.display = "block";
         document.getElementById('status-teks').innerText = bmi < 24 ? "Ideal ✨" : "Berisi";
         document.getElementById('bmi-angka').innerText = `BMI: ${bmi.toFixed(1)}`;
+        // Link foto tetap aman
         document.getElementById('img-visual').src = "https://i.postimg.cc/NjHJgvtQ/AVATAR.jpg";
     };
 
